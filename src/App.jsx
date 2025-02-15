@@ -1,19 +1,28 @@
-import Navbar from "./components/navbar"
 import { publicRouter } from "./routers"
-import { BrowserRouter as Router, Routes, Route ,Link } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { DefaultLayout } from "./layouts"
+
 function App() {
   return (
     <Router>
-      <Navbar />
-
       <Routes>
         {
-          publicRouter.map((route, index) => (
-            <Route key={index} 
-                   path={route.path} 
-                   element={route.elememt} 
-            />
-          ))
+          publicRouter.map((route, index) => {
+            
+            let Layout =  DefaultLayout
+            if(route.layout){
+              Layout = route.layout 
+            }else if(route.layout === null){
+              Layout = React.Fragment
+            }
+            
+            
+            return (
+              <Route  key={index} 
+                      path={route.path} 
+                      element={ <Layout>{route.elememt}</Layout>} />
+            )
+          })
         }
       </Routes>
     </Router> 

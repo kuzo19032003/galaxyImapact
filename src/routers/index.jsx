@@ -4,6 +4,7 @@ import Movie from "../pages/movie"
 import Theater from "../pages/theater"
 import TicketPrice from "../pages/ticketprice"
 import EventFilm from "../pages/event"
+import { OnlyHeaderLayout } from "../layouts"
 
 
 
@@ -14,7 +15,8 @@ const publicRouter = [
     },
     {
         path:"/movie",
-        elememt:<Movie />
+        elememt:<Movie />,
+        layout:  OnlyHeaderLayout
     },
     {
         path:"/ticketprice",
