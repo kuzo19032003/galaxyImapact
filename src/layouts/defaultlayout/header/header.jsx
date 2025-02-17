@@ -3,7 +3,7 @@ import Navbar from "../../../components/navbar/";
 function Header()
 {
     return (
-        <div>
+        <div className="md:mb-2 " >
           <Navbar />
         </div>
     )

@@ -16,11 +16,16 @@ function App() {
               Layout = React.Fragment
             }
             
-            
             return (
-              <Route  key={index} 
-                      path={route.path} 
-                      element={ <Layout>{route.elememt}</Layout>} />
+              <Route  
+                  key={index} 
+                  path={route.path} 
+                  element={ 
+                    <Layout>
+                      {route.elememt}
+                    </Layout>
+                  }
+              />
             )
           })
         }
