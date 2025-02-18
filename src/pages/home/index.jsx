@@ -1,9 +1,12 @@
 import Slider from "../../components/slider/slider";
+import Bookticket from "../../components/bookticket/bookticket";
 function Home() {
   return (
-    <div >
-      <Slider className="w-full min-h-120 bg-red-500 p-3 flex justify-center items-center"/>
+    <div className="overflow-x-hidden">
+      <Slider />
+      <Bookticket />
     </div>
   );
 }
+
 export default Home;
