@@ -17,7 +17,7 @@ function Slider({className})
             grabCursor={true}
             centeredSlides={true}   
             spaceBetween={50}
-            slidesPerView={2}
+            slidesPerView={1.5}
             coverflowEffect=
             {{
               rotate: 20, 
@@ -27,15 +27,14 @@ function Slider({className})
               slideShadows: true
             }}
             loop={true} 
-       
             pagination={{clickable: true, dynamicBullets: true}}
             autoplay={{delay: 3000, disableOnInteraction: false}}
             className=" w-full min-h-[50vh] "
         >
                 {
                     SliderImages.map((image, index) => (
-                        <SwiperSlide>
-                            <img key={index} src={image.src} alt={image.alt} className=" w-350 min-h-[54vh]" />
+                        <SwiperSlide key={index}>
+                            <img  src={image.src} alt={image.alt} className=" w-350 min-h-[54vh]" />
                         </SwiperSlide>
                     ))
                 }
