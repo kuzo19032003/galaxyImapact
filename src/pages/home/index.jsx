@@ -4,7 +4,7 @@ function Home() {
   return (
     <div className="">
       <Slider />
-      <Bookticket className="mt-10 flex justify-center"/>
+      <Bookticket className="mt-10 flex justify-center select-none"/>
     </div>
   );
 }
