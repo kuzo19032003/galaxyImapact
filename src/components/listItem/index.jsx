@@ -1,8 +1,10 @@
 import Item from "../item";
 import SearchBox from "../searchbox";
-function ListItem({items,className})
+function ListItem({items,className,search})
 {
+
     return (
+      
         <ul className={className}>
           {items.map((item, key )=>
             { 
@@ -11,7 +13,9 @@ function ListItem({items,className})
                 )
             })
           }
-          <SearchBox className=""/> 
+          { 
+            search && <SearchBox className=""/>
+          } 
         </ul>
     )
 }

@@ -6,10 +6,16 @@ function Bookticket({className}){
     const [isOpenMenuFilm, setIsOpenMenuFilm] = useState(false)
     const [isOpenMenuTheater, setIsOpenMenuTheater] = useState(false)
     const [isOpenMenuTimeDay, setIsOpenMenuTimeDay] = useState(false)
+    const [isOpenMenuShowTime, setIsOpenMenuShowTime] = useState(false)
+
 
 
     const [isNameFilm, setIsNameFilm] = useState(null)
     const [isTheater, setIsTheater] = useState(null)
+    const [isTimeDay, setIsTimeDay] = useState(null)
+    const [isShowTime, setIsShowTime] = useState(null)
+
+
 //Array
     const filmCinemar = [
         {nameFilm:'Nhà gia tiên', theater: 'Galaxy Bình chánh', timeDay:'Chủ nhật, 23/02/2025', showtime:'11:00'},
@@ -79,30 +85,54 @@ function Bookticket({className}){
     const handlerDropMenuFilm = () => {
         setIsOpenMenuFilm(!isOpenMenuFilm) 
         setIsOpenMenuTheater(false) 
+        setIsOpenMenuTimeDay(false)
+        setIsOpenMenuShowTime(false)
 
     }
 
     const handlerDropMenuTheater = () => {
         setIsOpenMenuFilm(false) 
         setIsOpenMenuTheater(!isOpenMenuTheater) 
+        setIsOpenMenuTimeDay(false)
+        setIsOpenMenuShowTime(false)
 
     }
     const handlerDropMenuTimeDay = () => {
         setIsOpenMenuFilm(false) 
         setIsOpenMenuTheater(false) 
         setIsOpenMenuTimeDay(!isOpenMenuTimeDay)
-        console.log(ArrTimeDayOfFilm);
+        setIsOpenMenuShowTime(false)
         
+    }
+    const handlerDropMenuShowTime = () => {
+        setIsOpenMenuFilm(false) 
+        setIsOpenMenuTheater(false) 
+        setIsOpenMenuTimeDay(false)
+        setIsOpenMenuShowTime(!isShowTime) 
     }
 
     const handleSetNameFilm = (e) =>{
         setIsNameFilm(uniqueFilmNames[e])
         setIsOpenMenuFilm(!isOpenMenuFilm) 
         setIsTheater(null)
+        setIsTimeDay(null)
+        setIsShowTime(null)
+
     }
     const handleSetTheater = (e) =>{
         setIsTheater(ArrTheaterOfFilm[e])
         setIsOpenMenuTheater(false) 
+        setIsTimeDay(null)
+        setIsShowTime(null)
+    }
+    const handleSetTimeDay = (e) =>{
+        setIsTimeDay(ArrTimeDayOfFilm[e])
+        setIsOpenMenuTimeDay(false) 
+        setIsShowTime(null)
+    }
+    const handleSetShowTime = (e) =>{
+        setIsShowTime(ArrShowTimeOfFilm[e])
+        setIsOpenMenuShowTime(false) 
     }
 
     const getTheaterOfFilm = (e) =>{
@@ -111,13 +141,14 @@ function Bookticket({className}){
     const getTimeDayOfFilm = (name,theater) => {
         return filmCinemar.filter(film => film.nameFilm === name && film.theater === theater).map(film => film.timeDay)
     }
-    const getShowTimeOfFilm = (name,theater) => {
-        return filmCinemar.filter(film => film.name == name && film.theater == theater).map(film => film.showtime)
+    const getShowTimeOfFilm = (name,theater,timeDay) => {
+        return filmCinemar.filter(film => film.nameFilm == name && film.theater == theater && film.timeDay == timeDay).map(film => film.showtime)
     }
     
     const ArrTheaterOfFilm = isNameFilm ? getTheaterOfFilm(isNameFilm) : []
-
     const ArrTimeDayOfFilm = isNameFilm && isTheater ? getTimeDayOfFilm(isNameFilm,isTheater) : []
+    const ArrShowTimeOfFilm = isNameFilm && isTheater && isTimeDay ? getShowTimeOfFilm(isNameFilm,isTheater,isTimeDay) : []
+
     
     return (
         
@@ -155,14 +186,11 @@ function Bookticket({className}){
                         onClick={isNameFilm ? handlerDropMenuTheater : null} 
                         className={
                             isNameFilm 
-                            ? "flex items-center basis-[20vw] justify-between mx-2" 
-                            : "flex items-center basis-[20vw] justify-between mx-2"}
+                            ? "flex items-center basis-[25vw] justify-between mx-2" 
+                            : "flex items-center basis-[25vw] justify-between mx-2"}
                     >
                         <div className="flex gap-2">
-                            <img 
-                                src={two} 
-                                alt=""
-                            /> 
+                            <img  src={two}  alt="" /> 
                             <p className={isNameFilm ? "opacity-100 " : "opacity-30 "}>
                                 {!isTheater ? 'chọn rạp ' : isTheater}
                             </p>
@@ -171,40 +199,59 @@ function Bookticket({className}){
                             <img 
                                 src={arrowDown} 
                                 alt="" 
-                                className={isNameFilm ? "opacity-100 gap-4" : "opacity-30 gap-4"}
+                                className={!isOpenMenuTheater ? "opacity-100 gap-4 block" : "opacity-30 gap-4 hidden"}
+                            /> 
+                            <img  
+                                src={arrowUp} 
+                                alt="" 
+                                className={isOpenMenuTheater ? 'block gap-3' : 'hidden'}
                             /> 
                         </div>
 
                     </div>
-                    <div onClick= {isTheater ? handlerDropMenuTimeDay : null} className="flex items-center basis-[15vw] justify-between mx-2" >
-                        <div   className="flex gap-2">
-                            <img 
-                                src={three} 
-                                alt=""
-                            /> 
-                            <p className={isTheater ? "opacity-100 " : "opacity-30 "} >chọn ngày</p>
+                    <div
+                         onClick= {isTheater ? handlerDropMenuTimeDay : null} 
+                         className="flex items-center basis-[25vw] justify-between mx-2" 
+                    >
+                        <div className="flex gap-2">
+                            <img src={three} alt="" /> 
+                            <p className={isTheater ? "opacity-100 " : "opacity-30 "} >
+                                    {!isTimeDay ? "chọn ngày": isTimeDay }
+                            </p>
                         </div>
                         <div>
                             <img 
                                 src={arrowDown} 
                                 alt="" 
-                                className={isTheater ? "opacity-100 gap-4" : "opacity-30 gap-4"}
+                                className={!isOpenMenuTimeDay ? "opacity-100 gap-4 block" : "opacity-30 gap-4 hidden"}
+                            /> 
+                            <img  
+                                src={arrowUp} 
+                                alt="" 
+                                className={isOpenMenuTimeDay ? 'block gap-3' : 'hidden'}
                             /> 
                         </div>
                     </div>
-                    <div className = "flex items-center basis-[15vw] justify-between mx-2" >
+                    <div
+                        onClick={isTimeDay ? handlerDropMenuShowTime : null}  
+                        className = "flex items-center basis-[15vw] justify-between mx-2" 
+                    >
                         <div className="flex gap-2">
-                            <img 
-                                src={four} 
-                                alt=""
-                            /> 
-                            <p> chọn suất </p>
+                            <img src={four}  alt="" /> 
+                            <p className={isTimeDay ? "opacity-100 " : "opacity-30 "}> 
+                                {!isShowTime ? "Chọn suất" : isShowTime}
+                            </p>
                         </div>
                         <div>
                             <img 
                                 src={arrowDown} 
                                 alt="arrowDown" 
-                                className="gap-4"
+                                className={!isOpenMenuShowTime ? "opacity-100 gap-4 block" : "opacity-30 gap-4 hidden"}
+                            /> 
+                            <img  
+                                src={arrowUp} 
+                                alt="" 
+                                className={isOpenMenuShowTime ? 'block gap-3' : 'hidden'}
                             /> 
                         </div>
                     </div>
@@ -239,7 +286,6 @@ function Bookticket({className}){
                     }
                 </ul>
             </div>
-
             <div 
                 ref={menuDropTheater} 
                 className = 
@@ -248,10 +294,10 @@ function Bookticket({className}){
                             ? 
                             'hidden' 
                             : ArrTheaterOfFilm.length > 3 
-                            ? "absolute top-[42vh] left-[39vw] h-65 overflow-y-scroll shadow-2xl w-[16vw] cursor-pointer z-40 bg-white"
+                            ? "absolute top-[42vh] left-[35vw] h-65 overflow-y-scroll shadow-2xl w-[16vw] cursor-pointer z-40 bg-white"
                             : ArrTheaterOfFilm.length > 1 
-                            ? "absolute top-[55vh] left-[39vw] h-auto overflow-y-scroll shadow-2xl w-[14vw] cursor-pointer z-40 bg-white"
-                            : "absolute top-[70vh] left-[39vw] h-auto overflow-y-scroll shadow-2xl w-[14vw] cursor-pointer z-40 bg-white"
+                            ? "absolute top-[55vh] left-[35vw] h-auto overflow-y-scroll shadow-2xl w-[14vw] cursor-pointer z-40 bg-white"
+                            : "absolute top-[70vh] left-[37vw] h-auto overflow-y-scroll shadow-2xl w-[14vw] cursor-pointer z-40 bg-white"
                     }
             >
                 <ul>
@@ -275,14 +321,42 @@ function Bookticket({className}){
                         !isOpenMenuTimeDay 
                             ? 
                             'hidden' 
-                            : "absolute top-[42vh] left-[54vw] h-65 overflow-y-scroll shadow-2xl w-[10vw] cursor-pointer z-40 bg-white"
+                            :ArrTimeDayOfFilm.length > 3
+                            ? "absolute top-[42vh] left-[53vw] h-65 overflow-y-scroll shadow-2xl w-[12vw] cursor-pointer z-40 bg-white"
+                            : "absolute top-[65vh] left-[53vw] h-auto overflow-y-scroll shadow-2xl w-[12vw] cursor-pointer z-40 bg-white"
                     }
             >
                 <ul>
                     {
                         ArrTimeDayOfFilm.map((ar,index) => (
                             <li 
-                                onClick={() => handleSetTheater(index)} 
+                                onClick={() => handleSetTimeDay(index)} 
+                                key={index} 
+                                className="p-[2vh] hover:bg-sky-100"
+                            >
+                                {ar}
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+            <div 
+                ref={menuDropShowTime} 
+                className = 
+                    {
+                        !isOpenMenuShowTime 
+                            ? 
+                            'hidden' 
+                            :ArrShowTimeOfFilm.length > 3
+                            ? "absolute top-[42vh] left-[65vw] h-65 overflow-y-scroll shadow-2xl w-[10vw] cursor-pointer z-40 bg-white"
+                            : "absolute top-[68vh] left-[65vw] h-auto overflow-y-scroll shadow-2xl w-[10vw] cursor-pointer z-40 bg-white"
+                    }
+            >
+                <ul>
+                    {
+                        ArrShowTimeOfFilm.map((ar,index) => (
+                            <li 
+                                onClick={() => handleSetShowTime(index)} 
                                 key={index} 
                                 className="p-[2vh] hover:bg-sky-100"
                             >
