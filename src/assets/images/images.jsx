@@ -9,6 +9,9 @@ import four from './four.png'
 import arrowUp from './arrow-up.png'
 import arrowDown from './down-arrow.png'
 
+import posterNGT from './posterNGT.jpg'
+import ticket from './ticket.png'
+import playbutton from './play-button.png'
 
 const SliderImages = [
     {src: denamhon, alt: "Den am hon"},
@@ -18,4 +21,4 @@ const SliderImages = [
 ]
 
 
-export  {SliderImages,one,two,three,four,arrowUp,arrowDown} ;
+export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton} ;

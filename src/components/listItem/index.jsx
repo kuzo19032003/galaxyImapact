@@ -9,7 +9,12 @@ function ListItem({items,className,search})
           {items.map((item, key )=>
             { 
                 return (
-                    <Item key={key} to={item.to}> {item.name}</Item>
+                    <Item 
+                        key={key} 
+                        to={item.to}
+                    > 
+                        {item.name}
+                    </Item>
                 )
             })
           }

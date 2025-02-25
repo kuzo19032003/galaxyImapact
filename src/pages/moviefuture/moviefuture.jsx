@@ -1,8 +1,8 @@
-function MovieFuture()
-{
-    return
-    (
-        <h1>2</h1>
-    )
-}
-export default MovieFuture
+function MovieFuture() {
+    return (
+      <div>
+        <h1>Future</h1>
+      </div>
+    );
+  }
+  export default MovieFuture;

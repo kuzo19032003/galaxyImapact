@@ -9,43 +9,49 @@ import MovieShowing from "../pages/movieshowing/movieshowing"
 import { OnlyHeaderLayout } from "../layouts"
 
 
+// const publicRouter1 = [
+//    {
+//         path: "/",
 
+//    }
+
+// ]
 const publicRouter = [
     {
         path:"/",
-        elememt:<Home />
+        element:<Home />
     },
     {
         path:"/movie",
-        elememt:<Movie />,
+        element:<Movie />,
         layout:  OnlyHeaderLayout
     },
     {
         path:"/ticketprice",
-        elememt:<TicketPrice />
+        element:<TicketPrice />
     },
     {
         path:"/filmstart",
-        elememt:<FilmStart />
+        element:<FilmStart />
     },    {
         path:"/theater",
-        elememt:<Theater />
+        element:<Theater />
     },
     {
         path:"/event",
-        elememt:<EventFilm />
-    }
+        element:<EventFilm />
+    },    { 
+        path: "/filmfuture",
+        element: <MovieFuture/>
+    },
+    { 
+        path: "/filmshowing",
+        element: <MovieShowing/>
+    },
 ]
+
 const privateRouter = []
 const filmRouter = [
-    { 
-        path: "/filmFuture",
-        elememt: <MovieFuture/>
-    },
-    { 
-        path: "/filmShowing",
-        elememt: <MovieShowing/>
-    },
 ]
 
 export { publicRouter,privateRouter,filmRouter }
