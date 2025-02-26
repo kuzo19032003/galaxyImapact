@@ -10,8 +10,15 @@ import arrowUp from './arrow-up.png'
 import arrowDown from './down-arrow.png'
 
 import posterNGT from './posterNGT.jpg'
+import posterNuHon from './posterNuHon.jpg'
+import posterCaptain from './posterCaptain.jpg'
+import posterDarkNuns from './posterDarkNuns.jpg'
+
 import ticket from './ticket.png'
 import playbutton from './play-button.png'
+
+
+
 
 const SliderImages = [
     {src: denamhon, alt: "Den am hon"},
@@ -21,4 +28,4 @@ const SliderImages = [
 ]
 
 
-export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton} ;
+export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns} ;

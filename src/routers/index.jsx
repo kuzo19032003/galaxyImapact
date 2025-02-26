@@ -6,6 +6,8 @@ import TicketPrice from "../pages/ticketprice"
 import EventFilm from "../pages/event"
 import MovieFuture from "../pages/moviefuture/moviefuture"
 import MovieShowing from "../pages/movieshowing/movieshowing"
+import BookTicketFilm from "../pages/bookticketfilm/bookticketfilm"
+
 import { OnlyHeaderLayout } from "../layouts"
 
 
@@ -47,6 +49,11 @@ const publicRouter = [
     { 
         path: "/filmshowing",
         element: <MovieShowing/>
+    },
+    { 
+        path: "/dat-ve/:id",
+        element: <BookTicketFilm/>,
+        layout:  OnlyHeaderLayout
     },
 ]
 
