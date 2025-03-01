@@ -32,7 +32,9 @@ function Film({className})
                 </div>
                 <div className="mt-[6vh]">
                     {
-                        selectedTab == "showing" ? <MovieShowing className= "grid grid-cols-4 gap-4"/> : <MovieFuture/>
+                        selectedTab == "showing" 
+                        ? <MovieShowing className= "grid grid-cols-4 gap-4"/> 
+                        : <MovieFuture/>
                     }
                 </div>
 

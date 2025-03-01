@@ -13,6 +13,8 @@ import posterNGT from './posterNGT.jpg'
 import posterNuHon from './posterNuHon.jpg'
 import posterCaptain from './posterCaptain.jpg'
 import posterDarkNuns from './posterDarkNuns.jpg'
+import posterDetailNGT from './posterDetailNGT.jpg'
+
 
 import ticket from './ticket.png'
 import playbutton from './play-button.png'
@@ -28,4 +30,4 @@ const SliderImages = [
 ]
 
 
-export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns} ;
+export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns,posterDetailNGT} ;

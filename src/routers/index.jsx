@@ -53,7 +53,6 @@ const publicRouter = [
     { 
         path: "/dat-ve/:id",
         element: <BookTicketFilm/>,
-        layout:  OnlyHeaderLayout
     },
 ]
 
