@@ -53,7 +53,7 @@ function BookTicketFilm()
                     Day: "4/1/2025",
                     Theaters: [
                         {
-                            nameTheater: "Galaxy Nguyễn Du",
+                            nameTheater: "Galaxy Nguyễn Minh",
                             time: ["11h45", "12h45", "1h45"]
                         },
                         {
