@@ -1,5 +1,5 @@
-import MovieCard from "../../components/moviecard/moviecard"
-import { posterNGT,posterNuHon,posterDarkNuns,posterCaptain } from "../../assets/images/images";
+import MovieCard from "../moviecard/moviecard";
+import { posterNGT,posterNuHon,posterDarkNuns,posterCaptain } from "../../../assets/images/images";
 function MovieShowing({className}) {
     const moviePoster =[
         {id:1,img:posterNGT,src:"abc",trailer:"ac",nameFilm:"Nhà gia tiên",vote:"9.7",ages:"T13"},

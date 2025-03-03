@@ -1,9 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useState,useEffect } from "react";
 import { posterNGT,posterNuHon,posterDarkNuns,posterCaptain,posterDetailNGT } from "../../assets/images/images";
-import MovieImage from "../../components/movieimage/movieImage";
-import MovieDetail from "../../components/moviedetail/moviedetail";
-import MovieNowPlaying from "../../components/movienowplaying/movienowplaying";
+
+import MovieImage from "../../components/film/movieimage/movieImage";
+import MovieDetail from "../../components/film/moviedetail/moviedetail";
+import MovieNowPlaying from "../../components/film/movienowplaying/movienowplaying";
 
 function BookTicketFilm()
 {

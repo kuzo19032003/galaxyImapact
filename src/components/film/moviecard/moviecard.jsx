@@ -1,4 +1,4 @@
-import { ticket,playbutton } from "../../assets/images/images"
+import { ticket,playbutton } from "../../../assets/images/images";
 import {Link} from "react-router-dom" 
 function MovieCard({id,img,nameFilm,trailer,src,vote,ages})
 {

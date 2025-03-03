@@ -1,6 +1,6 @@
 import { useState } from "react"
-import MovieFuture from "../moviefuture/moviefuture"
-import MovieShowing from "../movieshowing/movieshowing"
+import MovieFuture from "./moviefuture/moviefuture"
+import MovieShowing from "./movieshowing/movieshowing"
 
 
 function Film({className})

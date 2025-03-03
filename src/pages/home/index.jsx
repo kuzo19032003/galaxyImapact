@@ -1,6 +1,6 @@
 import Slider from "../../components/slider/slider";
 import Bookticket from "../../components/bookticket/bookticket";
-import Film from "../film/film";
+import Film from "../../components/film/film";
 function Home() {
   return (
     <div className="">
