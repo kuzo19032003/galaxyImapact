@@ -5,10 +5,13 @@ import logo from "../../assets/logo.png";
 import Button from "../button";
 import Input from "../input";
 import ListItem from "../listItem";
-
-
+import { useAuth } from "../../context/authcontext/authcontext";
+import {LoginForm} from "../form/loginform/loginform";
 function Navbar() {
- 
+
+  
+  const {state,dispatch} = useAuth();
+
   const items = [
     {to:"/", name: "Trang chủ"},
     {to: "/ticketprice", name: "Mua vé"},
@@ -18,6 +21,9 @@ function Navbar() {
     {to: "/filmstart", name: "Góc điện ảnh"}
   ];
 
+  const closeLoginForm = () => {
+    dispatch({type:"LOGOUT"})
+  }
 
   return (
     <nav className="flex justify-between items-center w-[92%] mx-auto ">
@@ -28,8 +34,15 @@ function Navbar() {
         <ListItem search={true} items={items} className="flex md:flex-row flex-col items-center gap-[3vh] md:gap-[2vw] p-2"/>
       </div>
       <div className="flex gap-2">
-        <Button className="bg-red-300 rounded-full p-2" > Đăng ký </Button>
-        <Button className="bg-yellow-300 p-2 "  > Đăng nhập </Button>
+        {
+          state.isAuthenticated === false 
+          && 
+          <Button className="bg-yellow-300 p-2 " onclick={() => dispatch({type:"LOGIN"})} > 
+              Đăng nhập 
+          </Button>
+        }
+          <LoginForm isLogin={state.isAuthenticated} close={closeLoginForm} />
+        
       </div>
   </nav>
   );
