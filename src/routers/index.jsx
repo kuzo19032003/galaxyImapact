@@ -28,7 +28,7 @@ const publicRouter = [
         layout:  OnlyHeaderLayout
     },
     {
-        path:"/ticketprice",
+        path:"/booking",
         element:<TicketPrice />
     },
     {

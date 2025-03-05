@@ -34,13 +34,18 @@ function AuthReducer(state,action) {
 
 export function AuthProvider ({children}){
     const [state, dispatch] = useReducer(AuthReducer, initialState)
-    const login = () => {console.log('login')};
     
+    const loginAccount = (userData) => {
+        dispatch({type:'LOGIN', payload: userData})
+    };
+
     const register = () => {console.log('login')};
-    const logout = () => {console.log('login')};
+    const logout = () => {
+        dispatch({type:'LOGOUT'})
+    };
 
     return (
-        <AuthContext.Provider value={{state,dispatch}}>
+        <AuthContext.Provider value={{...state, loginAccount, register, logout}}>
             {children}
         </AuthContext.Provider>
     )

@@ -10,21 +10,20 @@ import {LoginForm} from "../form/loginform/loginform";
 function Navbar() {
 
   
-  const {state,dispatch} = useAuth();
-
-  const items = [
+  const {user,isAuthenticated,login,openLoginForm,logout} = useAuth();
+  const [isOpenForm , setIsOpenForm] = useState(false);
+  const items = [ 
     {to:"/", name: "Trang chủ"},
-    {to: "/ticketprice", name: "Mua vé"},
+    {to: "/booking", name: "Mua vé"},
     {to: "/movie", name: "Phim"},
     {to: "/theater", name: "Rạp / Giá vé"},
     {to: "/event", name: "Sự kiện"},
     {to: "/filmstart", name: "Góc điện ảnh"}
   ];
 
-  const closeLoginForm = () => {
-    dispatch({type:"LOGOUT"})
-  }
 
+
+  
   return (
     <nav className="flex justify-between items-center w-[92%] mx-auto ">
       <div >
@@ -35,13 +34,33 @@ function Navbar() {
       </div>
       <div className="flex gap-2">
         {
-          state.isAuthenticated === false 
-          && 
-          <Button className="bg-yellow-300 p-2 " onclick={() => dispatch({type:"LOGIN"})} > 
-              Đăng nhập 
-          </Button>
+          isAuthenticated ? (
+            <div className="flex gap-2">
+                { user &&
+                 <div>
+                    <Link to="/profile" className="text-black">
+                        WELCOME, {user.email}
+                    </Link>
+                    <Button onclick={logout} className="bg-red-500">
+                        Log out
+                    </Button>
+                 </div>
+                }
+
+            </div>
+          ) : (
+            <Button 
+                onclick={() => setIsOpenForm(!isOpenForm)} 
+                className="bg-blue-500"
+            >
+                Đăng nhập
+            </Button>
+          )
         }
-          <LoginForm isLogin={state.isAuthenticated} close={closeLoginForm} />
+          <LoginForm 
+              isOpen={isOpenForm} 
+              isClose={() => setIsOpenForm(false)} 
+          />
         
       </div>
   </nav>
