@@ -6,6 +6,7 @@ import TicketPrice from "../pages/ticketprice"
 import EventFilm from "../pages/event"
 
 import BookTicketFilm from "../pages/bookticketfilm/bookticketfilm"
+import Booking from "../pages/ticketprice/booking/booking"
 
 import { OnlyHeaderLayout } from "../layouts"
 
@@ -46,6 +47,10 @@ const publicRouter = [
         path: "/dat-ve/:id",
         element: <BookTicketFilm/>,
     },
+    { 
+        path: "/booking/:id",
+        element: <Booking/>,
+    }
 ]
 
 const privateRouter = []
