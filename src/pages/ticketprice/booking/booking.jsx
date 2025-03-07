@@ -1,21 +1,34 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import Bill from "./bill/bill";
 function Booking(){
 
-  const [isSeatSelected,setIsSeatSelected] = useState(["7 - 3"])
+  const location  = useLocation()
 
-  const theaTer = {
+  const {theater,time,day,movie} = location.state 
+
+
+
+  
+  const [isSeatSelected,setIsSeatSelected] = useState([])
+  const [isSeatSelling,setIsSeatSelling] = useState(["G7"])
+
+  const [totalPrice,setTotalPrice] = useState("")
+
+
+  const theaTers = {
       room1:{
         rows:5,
         col:5,
         seats: [
-            [1,1,1,0,1,1,1,1,1,0,1,1,1],
-            [1,1,0,1,1,1,1,1,0,1,1],
-            [1,1,0,1,1,1,1,1,0,1,1],
-            [1,1,0,1,1,1,1,1,0,1,1],
-            [0,1,1,1,1,1,1,1,1,1,0],
-            [1,1,0,1,1,1,1,1,0,1,1],
-            [1,1,0,1,1,1,1,1,0,1,1],
-            [0,1,1,1,1,1,1,1,1,1,0]
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+            [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
         ]
       },
       room2:{
@@ -24,14 +37,24 @@ function Booking(){
         seats: null
       }
   } 
-    const room = theaTer["room1"];
+    const room = theaTers["room1"];
     const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
 
-    const selectedSeat  = (row,col) => {
-          const idSeat = `${row} - ${col}`
-          setIsSeatSelected(prev => [...prev,idSeat])
+
+
+    
+    const selectedSeat  = (seatLabel,seatNumber,) => {
+          const idSeat = `${seatLabel}${seatNumber}`
+          !isSeatSelling.includes(idSeat) &&
+          setIsSeatSelected( (prev) => (
+              prev.includes(idSeat) ? prev.filter( e => e !== idSeat ) : [...prev,idSeat]     
+          ))     
     }  
-  
+    useEffect( () => {
+      const priceBook = 60000
+      setTotalPrice(() => (isSeatSelected.length * priceBook))
+    },[isSeatSelected])
+
     return (
       <div >
             <div className="w-full h-2 bg-gray-100"></div>
@@ -53,34 +76,39 @@ function Booking(){
                                   const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))
 
                                   return (
-                                    <li key={rowIndex}   className = "flex items-center justify-between p-3" >
+                                    <li key={rowIndex} className = "flex items-center justify-between p-3" >
                                         <div className="text-lg -mt-4">
                                              {seatLabel}
                                         </div>
                                         <div key={rowIndex}  className="flex  justify-center gap-x-2 "  >
                                           {
                                             col.map((seat,colIndex)=>{
-                                                  const idSeat = `${rowIndex} - ${colIndex}`
-                                           
-                                                  if(seat===0) {
-                                                    seatNumber = 1 
-                                                    return <div key={idSeat}   className="w-10 h-10"></div>
-                                                  }
-                                                  return(
-                                                      <button key={idSeat} 
-                                                              onClick={() => selectedSeat(rowIndex,colIndex)}
-                                                              className={`w-5 h-5 rounded-md text-xs 
-                                                                          transition duration-300 ease-in-out 
-                                                                           focus:outline-none 
-                                                                          ${isSeatSelected.includes(idSeat) 
-                                                                                ? "bg-orange-400 text-white " 
-                                                                                : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150  "}`}
+                                              const idSeat = `${rowIndex} - ${colIndex}`
+                                              const LabelNumerSeat = `${seatLabel}${seatNumber}`
+                                              if(seat===0) {
+                                                    seatNumber = seatNumber 
+                                                    return <div key={idSeat} className="w-10 h-10"></div>
+                                              }
+                                              return(
+                                                      <button 
+                                                          key={idSeat} 
+                                                          onClick={(e) => selectedSeat(seatLabel,e.target.textContent)}
+                                                          className={`w-5 h-5 rounded-md text-xs 
+                                                                      transition duration-300 ease-in-out 
+                                                                      focus:outline-none 
+                                                                      ${
+                                                                        isSeatSelling.includes(LabelNumerSeat) ? 
+                                                                        "bg-slate-500 text-neutral-400 "
+                                                                        : isSeatSelected.includes(LabelNumerSeat) 
+                                                                        ? "bg-orange-400 text-white" 
+                                                                        : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
+                                                                    }`}
                                                       >
                                                           {
                                                             seatNumber++
                                                           }
                                                       </button>
-                                                  ) 
+                                              ) 
                                             })
                                           }
                                         </div>
@@ -95,20 +123,20 @@ function Booking(){
                         }
                     </div>
                     {/* màn hình */}
-                    <div className="bg-gray-500 text-white text-center p-2 rounded-b-lg">
+                    <div className="bg-zinc-600 text-white text-center p-2 rounded-b-lg">
                             🎥 MÀN HÌNH 🎥
                     </div>
                     {/* ghi nhận ghế */}
                     <div className="mt-10">
                         <div className="flex gap-5">
                             <div className="flex items-center gap-x-2">
-                               <span className="w-5 h-5 inline-block  bg-orange-400 "></span>
+                               <span className="w-5 h-5 inline-block  bg-slate-500"></span>
                                <span>
-                                    Ghế đã bán
+                                  Ghế đã bán
                                </span>
                             </div>
                             <div className="flex items-center gap-x-2">
-                               <span className="w-5 h-5 inline-block  bg-blue-400"></span>
+                               <span className="w-5 h-5 inline-block  bg-orange-400 "></span>
                                <span>
                                     Ghế đã chọn
                                </span>
@@ -117,57 +145,7 @@ function Booking(){
                     </div>
                 </div>
                 {/* khung thanh toán */}
-                <div className="col-span-2 -translate-x-5 ">
-                      <div className="rounded-lg w-full min-h-114 shadow-2xl mt-15 ">
-                          <div className="bg-orange-400 h-2 rounded-t-lg"></div>
-                          
-                          <div className="p-7">
-                              <div className="flex flex-col">
-                                  <div className="flex gap-10  mt-2">
-                                        <img src="" alt="" width="150px" height="200px"/>
-                                        <div className="flex flex-col">
-                                            <span>Nhà gia tiên</span>
-                                            <span>2D Phụ đề - T18</span>
-                                        </div>
-                                  </div>
-                                  <span>
-                                      Galaxy buôn ma thuột - Rạp 5
-                                  </span>
-                                  <span>
-                                    Suất : 11h30 - Thứ sáu, 8/03/2025
-                                  </span>
-                              </div>
-                              <div className="mt-7">
-                                  <div className="border-1 border-dashed w-full  "></div>
-                                  <div> 
-                                      {
-                                        isSeatSelected.map((e) =>(
-                                            e
-                                        ))
-                                      }
-                                  </div>
-                                  <div className="border-1 border-dashed w-full  "></div>
-
-                                  <div className="flex justify-between mt-5  ">
-                                      <div>
-                                          Tổng cộng :
-                                      </div>
-                                      <div>
-                                          0 đ                                        
-                                      </div>
-                                  </div>
-                                  <div className="flex gap-20 justify-center mt-5">
-                                      <button>
-                                          Quay lại
-                                      </button>
-                                      <button>
-                                          Tiếp tục
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                </div>
+                  <Bill isSeatSelected={isSeatSelected} totalPrice ={totalPrice} theaTer={theater} time={time} day={day} movie={movie}/>
               </div>
             </div>
       </div>

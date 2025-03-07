@@ -72,7 +72,7 @@ function MovieDetail({movie})
                     </div>
                 </div>
                 <ContentFilm content ={movie.Content}/>
-                <ShowTime showTime ={movie.ShowTime}/>
+                <ShowTime showTime ={movie.ShowTime} movie={movie}/>
             </div>
         </div>
     )

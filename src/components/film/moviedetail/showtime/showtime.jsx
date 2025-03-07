@@ -1,14 +1,11 @@
 import { useState } from "react"
-function ShowTime({showTime}){
+import { Link } from "react-router-dom"
+function ShowTime({showTime,movie}){
 
     const [selectedDay,setSelectedDay] = useState(null)
     
     const theaterOfDay = showTime.find(theater => theater.Day === selectedDay)?.Theaters || []
-
-    console.log(selectedDay);
-    console.log(theaterOfDay);
     
-
     return(
         <div className="showTime mt-10">
             <div className="flex">
@@ -46,15 +43,20 @@ function ShowTime({showTime}){
                                     </div>
                                     <div className="flex flex-rows gap-10 mt-3 translate-x-55">
                                         {theater.time.map((t,index) => (
-                                            <div key={index} className="border border-gray-300 rounded w-[5vw] h-auto p-3 text-center">
-                                                <p>
+                                            <div 
+                                                key={index} 
+                                                className="border border-gray-300 rounded w-[5vw] h-auto p-3 text-center cursor-pointer"
+                                            >
+                                                <Link
+                                                    to={`/booking/${movie.nameFilm.replace(/\s+/g, "-").toLowerCase()}`}
+                                                    state={{theater:theater.nameTheater, time:t,day:selectedDay,movie:movie}}
+                                                >
                                                     {t}
-                                                </p>
+                                                </Link>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
-                                
                             ))             
                         }
                 </div>

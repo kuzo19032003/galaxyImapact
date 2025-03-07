@@ -11,13 +11,7 @@ import Booking from "../pages/ticketprice/booking/booking"
 import { OnlyHeaderLayout } from "../layouts"
 
 
-// const publicRouter1 = [
-//    {
-//         path: "/",
 
-//    }
-
-// ]
 const publicRouter = [
     {
         path:"/",
@@ -48,7 +42,7 @@ const publicRouter = [
         element: <BookTicketFilm/>,
     },
     { 
-        path: "/booking/:id",
+        path: "/booking/:movieName",
         element: <Booking/>,
     }
 ]
