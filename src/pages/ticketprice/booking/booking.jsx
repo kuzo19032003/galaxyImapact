@@ -37,7 +37,7 @@ function Booking(){
         seats: null
       }
   } 
-    const room = theaTers["room1"];
+    const room = theaTers["room2"];
     const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
 
 

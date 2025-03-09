@@ -11,6 +11,9 @@ import Booking from "../pages/ticketprice/booking/booking"
 import { OnlyHeaderLayout } from "../layouts"
 
 
+// Router admin
+import Admin from "../pages/admin/admin"
+import User from "../pages/admin/user/user"
 
 const publicRouter = [
     {
@@ -47,8 +50,14 @@ const publicRouter = [
     }
 ]
 
-const privateRouter = []
-const filmRouter = [
+const privateRouter = [
+    {path: "/admin" , element: <Admin/>},
+    {path: "/adminUser" , element: <User/>},
+    {path: "/adminFilm" , element: <Admin/>},
+    {path: "/adminDashboard" , element: <Admin/>},
+
+
 ]
 
-export { publicRouter,privateRouter,filmRouter }
+
+export { publicRouter,privateRouter}

@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
-import { publicRouter } from "./routers"
+import { publicRouter,privateRouter } from "./routers"
 import { DefaultLayout } from "./layouts"
 import { AuthProvider } from "./context/authcontext/authcontext"
 
+import AdminLayout from "./layouts/adminlayout/adminlayout"
 function App() {
   return (
         <AuthProvider>
@@ -12,12 +13,20 @@ function App() {
               {
                 publicRouter.map((route, index) => {
                   
-                  let Layout =  DefaultLayout
-                  if(route.layout){
-                    Layout = route.layout 
-                  }else if(route.layout === null){
-                    Layout = React.Fragment
+                  let Layout =  DefaultLayout 
+
+                  // if(route.layout){
+                  //   Layout = route.layout 
+                  // }else if(route.layout === null){
+                  //   Layout = React.Fragment
+                  // }
+                  
+                  if(route.layout !== undefined)
+                  {
+                      Layout = route.layout || React.Fragment
                   }
+                  
+
                   return (
                     <Route  
                         key={index} 
@@ -30,6 +39,22 @@ function App() {
                     />
                   )
                 })
+              }
+              {
+                privateRouter.map((route,index) => (
+
+                    <Route 
+                        key={index}
+                        path={route.path}
+                        element={
+                          <AdminLayout>
+                              {route.element}
+                          </AdminLayout>
+                        }
+                    />
+ 
+                ))
+
               }
             </Routes>
           </Router> 
