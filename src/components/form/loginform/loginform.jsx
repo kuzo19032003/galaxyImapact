@@ -1,5 +1,7 @@
     import { useState,useEffect } from "react";   
     import { useAuth } from "../../../context/authcontext/authcontext";
+    
+    
     function LoginForm({isOpen,isClose})
     {   
         const { loginAccount } = useAuth();
@@ -8,14 +10,18 @@
         const [login, setLogin] = useState(true);
         const [forgotPassword, setForgotPassword] = useState(false);
 
-        const [email,setEmail] = useState(""); 
+        const [username,setUsername] = useState(""); 
         const [password,setPassword] = useState("");  
 
         
-        const handleSubmitLogin = (e) => {
+        const handleSubmitLogin = async (e) => {
             e.preventDefault();
-            loginAccount({email});   
-            isClose();
+            
+            const result = await loginAccount(username,password)
+            if(result){
+                isClose(); 
+            }
+            
         }
 
         useEffect(() =>{
@@ -43,7 +49,7 @@
                                                 <input type="text" 
                                                     className="w-[150%] border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 " 
                                                     placeholder="Email..."
-                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    onChange={(e) => setUsername(e.target.value)}
                                                 />
                                                 <input type="password" 
                                                     className="w-[150%] border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 

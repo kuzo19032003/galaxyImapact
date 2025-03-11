@@ -1,6 +1,6 @@
-import { createContext, useContext, useReducer } from 'react'
+import { createContext, useContext, useEffect, useReducer } from 'react'
 
-
+import { loginAcc } from "../../services/authService/authservice";
 const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
@@ -35,12 +35,20 @@ function AuthReducer(state,action) {
 export function AuthProvider ({children}){
     const [state, dispatch] = useReducer(AuthReducer, initialState)
     
-    const loginAccount = (userData) => {
-        dispatch({type:'LOGIN', payload: userData})
+    const loginAccount = async (username,password) => {
+
+
+
+        const result = await loginAcc(username,password)
+        if(result.success){
+            dispatch({type:'LOGIN', payload: username})
+        }
+        return result
     };
 
     const register = () => {console.log('login')};
     const logout = () => {
+        localStorage.removeItem("token")
         dispatch({type:'LOGOUT'})
     };
 

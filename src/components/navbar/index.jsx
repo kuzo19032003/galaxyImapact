@@ -21,6 +21,7 @@ function Navbar() {
     {to: "/filmstart", name: "Góc điện ảnh"}
   ];
 
+console.log(user);
 
 
   
@@ -39,7 +40,7 @@ function Navbar() {
                 { user &&
                  <div>
                     <Link to="/profile" className="text-black">
-                        WELCOME, {user.email}
+                        WELCOME, {user}
                     </Link>
                     <Button onclick={logout} className="bg-red-500">
                         Log out
