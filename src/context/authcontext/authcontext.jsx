@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
 
-import { loginAcc } from "../../services/authService/authservice";
+import { loginAcc,register } from "../../services/authService/authservice";
 const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
@@ -17,8 +17,14 @@ const initialState = {
 function AuthReducer(state,action) {
     switch (action.type){
         case 'LOGIN':
+           
             return {
                 isAuthenticated: true,
+                user: action.payload
+            }
+        case 'REGISTER':
+            return {
+                isAuthenticated: false,
                 user: action.payload
             }
         case 'LOGOUT':
@@ -37,23 +43,28 @@ export function AuthProvider ({children}){
     
     const loginAccount = async (username,password) => {
 
-
-
         const result = await loginAcc(username,password)
+        
         if(result.success){
-            dispatch({type:'LOGIN', payload: username})
+            dispatch({type:'LOGIN', payload: result.user})
         }
         return result
     };
 
-    const register = () => {console.log('login')};
+    const registerAccout = async (username,password,fullName,gender,dateOfBirth,email) => {
+        const result = await register(username,password,fullName,gender,dateOfBirth,email)
+        if(result.success){
+            dispatch({type:'REGISTER', payload: username})
+        }
+        return result
+    };
     const logout = () => {
         localStorage.removeItem("token")
         dispatch({type:'LOGOUT'})
     };
 
     return (
-        <AuthContext.Provider value={{...state, loginAccount, register, logout}}>
+        <AuthContext.Provider value={{...state, loginAccount, registerAccout, logout}}>
             {children}
         </AuthContext.Provider>
     )

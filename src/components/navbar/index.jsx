@@ -52,7 +52,7 @@ console.log(user);
           ) : (
             <Button 
                 onclick={() => setIsOpenForm(!isOpenForm)} 
-                className="bg-blue-500"
+                className="text-gray-500 p-2 hover:text-blue-500"
             >
                 Đăng nhập
             </Button>
