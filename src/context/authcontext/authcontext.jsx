@@ -4,6 +4,7 @@ import { loginAcc,register } from "../../services/authService/authservice";
 const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
+
 //useReducer
 
 //trạng thái ban đầu
@@ -16,8 +17,7 @@ const initialState = {
 
 function AuthReducer(state,action) {
     switch (action.type){
-        case 'LOGIN':
-           
+        case 'LOGIN':    
             return {
                 isAuthenticated: true,
                 user: action.payload
@@ -40,16 +40,24 @@ function AuthReducer(state,action) {
 
 export function AuthProvider ({children}){
     const [state, dispatch] = useReducer(AuthReducer, initialState)
+   
     
     const loginAccount = async (username,password) => {
 
         const result = await loginAcc(username,password)
-        
+    
         if(result.success){
-            dispatch({type:'LOGIN', payload: result.user})
+            dispatch({type:'LOGIN', payload: result.users})
         }
         return result
     };
+    useEffect(()=>{
+        const tokenStore = localStorage.getItem("token")
+        const userStore = localStorage.getItem("user")
+        if(tokenStore && userStore){
+            dispatch({type:'LOGIN', payload: JSON.parse(userStore)})
+        }
+    },[])
 
     const registerAccout = async (username,password,fullName,gender,dateOfBirth,email) => {
         const result = await register(username,password,fullName,gender,dateOfBirth,email)
@@ -60,6 +68,7 @@ export function AuthProvider ({children}){
     };
     const logout = () => {
         localStorage.removeItem("token")
+        localStorage.removeItem("user")
         dispatch({type:'LOGOUT'})
     };
 

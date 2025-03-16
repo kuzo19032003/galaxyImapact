@@ -49,7 +49,7 @@ function Booking(){
           setIsSeatSelected( (prev) => (
               prev.includes(idSeat) ? prev.filter( e => e !== idSeat ) : [...prev,idSeat]     
           ))     
-    }  
+    }   
     useEffect( () => {
       const priceBook = 60000
       setTotalPrice(() => (isSeatSelected.length * priceBook))
