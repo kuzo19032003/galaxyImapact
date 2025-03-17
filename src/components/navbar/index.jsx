@@ -7,6 +7,14 @@ import Input from "../input";
 import ListItem from "../listItem";
 import { useAuth } from "../../context/authcontext/authcontext";
 import {LoginForm} from "../form/loginform/loginform";
+
+import {resume} from "../../assets/images/images"
+import {userFace} from "../../assets/images/images"
+import {logoutIMG} from "../../assets/images/images"
+import {scroll} from "../../assets/images/images"
+
+
+
 function Navbar() {
 
   
@@ -23,11 +31,6 @@ function Navbar() {
     {to: "/filmstart", name: "Góc điện ảnh"}
   ];
 
-  useEffect(() =>{
-
-  },[])
-
-;
 
 
   
@@ -47,15 +50,32 @@ function Navbar() {
                  <div className="flex gap-x-4">
                     
                     <div className="relative text-black font-bold group">
-                      <Link to="/profile" className="hover:text-orange-500">
-                           hi, {user.fullName}
+                      <Link to="/profile" className="hover:text-orange-500 flex gap-5">
+                         <img src={userFace} alt="" /> hi, {user.fullName}
                       </Link>
-                      <div className="absolute left-1 hidden group-hover:block bg-white shadow-2xl p-1 w-[10vw] h-50px z-19 ">
-                        <div className="hover:border-l-2 hover:bg-orange-100 hover:text-orange-400">
-                          <Button onclick={logout} className="text-sm font-medium  ">
-                              Log out
-                          </Button>
-                        </div>
+                      <div className="absolute w-[10vw] h-50 hidden bg- group-hover:block"></div>
+                      <div className="absolute left-1 hidden group-hover:block bg-white w-[12vw] shadow-xl h-auto z-19 mt-3 ">
+                          <div className=" hover:bg-orange-100 hover:text-orange-400 hover:border-l-4 trasition-all duration-300 ease-in-out border-orange-400 ">
+                              <Button  className="text-sm font-normal m-3 hover:filter hover:brightness-125">
+                                  <Link to="/profile" className="flex gap-x-3 ">
+                                       <img src={resume} alt="" />Tài khoản
+                                  </Link>
+                              </Button>
+                          </div>
+                          <div className=" hover:bg-orange-100 hover:text-orange-400 hover:border-l-4 trasition-all duration-300 ease-in-out border-orange-400">
+                            <Button  className="text-sm font-normal m-3 ">
+                                <div className="flex gap-x-3">
+                                   <img src={scroll} alt="" />Lịch sử giao dịch
+                                </div> 
+                            </Button>
+                          </div>
+                          <div className=" hover:bg-orange-100 hover:text-orange-400 hover:border-l-4 trasition-all duration-300 ease-in-out border-orange-400">
+                            <Button onclick={logout} className="text-sm font-normal m-3 ">
+                               <div className="flex gap-x-3">
+                                  <img src={logoutIMG} alt="" />Đăng xuất 
+                               </div>
+                            </Button>
+                          </div>
                       </div> 
                     </div>
                     

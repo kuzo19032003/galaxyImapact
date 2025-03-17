@@ -1,18 +1,14 @@
 import { useState,useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import Bill from "./bill/bill";
 function Booking(){
 
   const location  = useLocation()
 
   const {theater,time,day,movie} = location.state 
-
-
-
   
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState(["G7"])
-
   const [totalPrice,setTotalPrice] = useState("")
 
 
@@ -37,12 +33,11 @@ function Booking(){
         seats: null
       }
   } 
+  
     const room = theaTers["room2"];
     const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
+    const nav = useNavigate()
 
-
-
-    
     const selectedSeat  = (seatLabel,seatNumber,) => {
           const idSeat = `${seatLabel}${seatNumber}`
           !isSeatSelling.includes(idSeat) &&
@@ -53,6 +48,9 @@ function Booking(){
     useEffect( () => {
       const priceBook = 60000
       setTotalPrice(() => (isSeatSelected.length * priceBook))
+
+      const token = localStorage.getItem("token")
+      !token && nav("/")
     },[isSeatSelected])
 
     return (
@@ -145,7 +143,14 @@ function Booking(){
                     </div>
                 </div>
                 {/* khung thanh toán */}
-                  <Bill isSeatSelected={isSeatSelected} totalPrice ={totalPrice} theaTer={theater} time={time} day={day} movie={movie}/>
+                  <Bill 
+                      isSeatSelected={isSeatSelected} 
+                      totalPrice ={totalPrice} 
+                      theaTer={theater} 
+                      time={time} 
+                      day={day} 
+                      movie={movie}
+                  />
               </div>
             </div>
       </div>

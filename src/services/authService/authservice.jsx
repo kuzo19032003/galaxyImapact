@@ -11,14 +11,11 @@ const loginAcc = async (username,password) => {
             const user = await getInforOfUser(username)
             
             if(user.success){
-                console.log(user.user);          
+                        
                 localStorage.setItem("user",JSON.stringify(user.user))   
                 return {success:true,users: user.user}
-                
             }else{
-                
                 return {success:false,message:"Lấy thông tin thất bại rồi !"}
-            
             } 
         }       
     }catch(error){
@@ -36,8 +33,7 @@ const register = async (username,password,fullName,gender,dateOfBirth,email) => 
 }
 const getInforOfUser = async (username) =>{
     try{
-        const response = await axiosInstance.get(`/api/users/${username}`)
-        
+        const response = await axiosInstance.get(`/api/users/${username}`) 
         return {success:true, user: response.data}
     }catch(error){
         return {success: false,message: "Lấy thông tin thất bại"}

@@ -3,18 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 function Bill({isSeatSelected,totalPrice,theaTer,time,day,movie })
 {
-    const nav = useNavigate()
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        
-        if(!token)
-        {
-           
-            nav("/")
-            return;
-        }
 
-    },[nav])
     const navigate = useNavigate()
     return (
         <div className="col-span-2 -translate-x-5 ">

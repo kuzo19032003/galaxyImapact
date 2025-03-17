@@ -5,9 +5,6 @@ function ShowTime({showTime}){
     
     const theaterOfDay = showTime.find(theater => theater.Day === selectedDay)?.Theaters || []
 
-    console.log(selectedDay);
-    console.log(theaterOfDay);
-    
 
     return(
         <div className="showTime mt-10">
@@ -46,7 +43,10 @@ function ShowTime({showTime}){
                                     </div>
                                     <div className="flex flex-rows gap-10 mt-3 translate-x-55">
                                         {theater.time.map((t,index) => (
-                                            <div key={index} className="border border-gray-300 rounded w-[5vw] h-auto p-3 text-center">
+                                            <div 
+                                                key={index} 
+                                                className="border border-gray-300 rounded w-[5vw] h-auto p-3 text-center"
+                                            >
                                                 <p>
                                                     {t}
                                                 </p>

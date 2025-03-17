@@ -7,6 +7,8 @@ import EventFilm from "../pages/event"
 
 import BookTicketFilm from "../pages/bookticketfilm/bookticketfilm"
 import Booking from "../pages/ticketprice/booking/booking"
+import Profile from "../pages/profile/profile"
+
 
 import { OnlyHeaderLayout } from "../layouts"
 
@@ -47,6 +49,11 @@ const publicRouter = [
     { 
         path: "/booking/:movieName",
         element: <Booking/>,
+    }
+    ,
+    { 
+        path: "/profile",
+        element: <Profile/>,
     }
 ]
 
