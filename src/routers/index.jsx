@@ -9,7 +9,8 @@ import BookTicketFilm from "../pages/bookticketfilm/bookticketfilm"
 import Booking from "../pages/ticketprice/booking/booking"
 import Profile from "../pages/profile/profile"
 
-
+import ProfileDetail from "../pages/profile/profileDetail/profileDetail"
+import Transaction from "../pages/profile/transaction/transaction"
 import { OnlyHeaderLayout } from "../layouts"
 
 
@@ -54,7 +55,14 @@ const publicRouter = [
     { 
         path: "/profile",
         element: <Profile/>,
-    }
+    },
+    { 
+        path: "/profile/#profile",
+        element: <ProfileDetail/>,
+    },    { 
+        path: "/profile/#transaction",
+        element: <Transaction/>,
+    },
 ]
 
 const privateRouter = [

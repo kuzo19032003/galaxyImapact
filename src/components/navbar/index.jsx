@@ -15,6 +15,7 @@ import {scroll} from "../../assets/images/images"
 
 
 
+
 function Navbar() {
 
   
@@ -54,19 +55,20 @@ function Navbar() {
                          <img src={userFace} alt="" /> hi, {user.fullName}
                       </Link>
                       <div className="absolute w-[10vw] h-50 hidden bg- group-hover:block"></div>
-                      <div className="absolute left-1 hidden group-hover:block bg-white w-[12vw] shadow-xl h-auto z-19 mt-3 ">
-                          <div className=" hover:bg-orange-100 hover:text-orange-400 hover:border-l-4 trasition-all duration-300 ease-in-out border-orange-400 ">
-                              <Button  className="text-sm font-normal m-3 hover:filter hover:brightness-125">
-                                  <Link to="/profile" className="flex gap-x-3 ">
-                                       <img src={resume} alt="" />Tài khoản
+                      <div className="absolute left-1 hidden group-hover:block bg-white w-[14vw] shadow-xl h-auto z-19 mt-3 ">
+                          <div 
+                            className= " hover:bg-orange-100 hover:text-orange-400 hover:border-l-4  trasition-all duration-300 ease-in-out border-orange-400 ">
+                              <Button  className="text-sm font-normal m-3 ">
+                                  <Link to="/profile/#profile" className="flex gap-x-3 ">
+                                       <img src={resume} alt=""/>Tài khoản
                                   </Link>
                               </Button>
                           </div>
                           <div className=" hover:bg-orange-100 hover:text-orange-400 hover:border-l-4 trasition-all duration-300 ease-in-out border-orange-400">
                             <Button  className="text-sm font-normal m-3 ">
-                                <div className="flex gap-x-3">
+                                <Link to="/profile/#transaction" className="flex gap-x-3 ">
                                    <img src={scroll} alt="" />Lịch sử giao dịch
-                                </div> 
+                                </Link> 
                             </Button>
                           </div>
                           <div className=" hover:bg-orange-100 hover:text-orange-400 hover:border-l-4 trasition-all duration-300 ease-in-out border-orange-400">
