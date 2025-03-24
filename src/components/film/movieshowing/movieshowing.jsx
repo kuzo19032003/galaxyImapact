@@ -13,7 +13,14 @@ function MovieShowing({className}) {
             <div className="grid grid-cols-3 gap-x-100 gap-y-7">
                 {
                     moviePoster.map((movie,index) => (
-                        <MovieCard id={movie.id} key={index} img={movie.img} nameFilm={movie.nameFilm} vote={movie.vote} ages={movie.ages}/>
+                        <MovieCard 
+                            id={movie.id} 
+                            key={index} 
+                            img={movie.img} 
+                            nameFilm={movie.nameFilm} 
+                            vote={movie.vote} 
+                            ages={movie.ages}
+                        />
                     ))    
                 }   
 

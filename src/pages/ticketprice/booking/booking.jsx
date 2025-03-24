@@ -1,16 +1,18 @@
 import { useState,useEffect } from "react";
 import { useLocation,useNavigate } from "react-router-dom";
+
+import { useFilm } from "../../../context/filmcontext/filmcontext";
 import Bill from "./bill/bill";
 function Booking(){
 
   const location  = useLocation()
 
-  const {theater,time,day,movie} = location.state 
-  
+  const {theater,time,day,movie} = location.state   
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState(["G7"])
   const [totalPrice,setTotalPrice] = useState("")
 
+  const {GetSeatOfHall} = useFilm()
 
   const theaTers = {
       room1:{
@@ -35,7 +37,7 @@ function Booking(){
   } 
   
     const room = theaTers["room2"];
-    const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
+    // const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
     const nav = useNavigate()
 
     const selectedSeat  = (seatLabel,seatNumber,) => {
@@ -44,13 +46,39 @@ function Booking(){
           setIsSeatSelected( (prev) => (
               prev.includes(idSeat) ? prev.filter( e => e !== idSeat ) : [...prev,idSeat]     
           ))     
-    }   
+    } 
+
+    const [seats,setSeats] = useState([])
+
     useEffect( () => {
       const priceBook = 60000
       setTotalPrice(() => (isSeatSelected.length * priceBook))
-
       const token = localStorage.getItem("token")
       !token && nav("/")
+    
+      const log = async () => {
+          const data = await GetSeatOfHall("23")
+
+          let seatsTemporary = []
+          let rowSeat = -1
+          
+          data.seats.forEach((seat,index) =>{
+              const rowLetter = seat.seatNumber[0]
+              const seatNumber = parseInt(seat.seatNumber.slice(1))
+              
+              if(seatNumber === 1){
+                  rowSeat++
+                  seatsTemporary[rowSeat] = []
+              }
+              seatsTemporary[rowSeat].push(seat)
+ 
+            })       
+            setSeats(seatsTemporary)
+      }
+      log()
+      
+
+      console.log(seats)
     },[isSeatSelected])
 
     return (
@@ -68,54 +96,96 @@ function Booking(){
                         {
                           <ul className="shadow-lg w-auto bg-white rounded-md">
                              {
-                               seats.map((col,rowIndex) => {
-                                  let seatNumber = 1
-                                  const totalRow = seats.length
-                                  const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))
-
+                              //  seats.map((col,rowIndex) => {
+                              //     let seatNumber = 1
+                              //     const totalRow = seats.length
+                              //     const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))
+                              //     return (
+                              //       <li key={rowIndex} className = "flex items-center justify-between p-3" >
+                              //           <div className="text-lg -mt-4">
+                              //                {seatLabel}
+                              //           </div>
+                              //           <div key={rowIndex}  className="flex  justify-center gap-x-2 "  >
+                              //             {
+                              //               col.map((seat,colIndex)=>{
+                              //                 const idSeat = `${rowIndex} - ${colIndex}`
+                              //                 const LabelNumerSeat = `${seatLabel}${seatNumber}`
+                              //                 if(seat===0) {
+                              //                       seatNumber = seatNumber 
+                              //                       return <div key={idSeat} className="w-10 h-10"></div>
+                              //                 }
+                              //                 return(
+                              //                         < button 
+                              //                             key={idSeat} 
+                              //                             onClick={(e) => selectedSeat(seatLabel,e.target.textContent)}
+                              //                             className =
+                              //                             {`w-5 h-5 rounded-md text-xs 
+                              //                               transition duration-300 ease-in-out 
+                              //                               focus:outline-none 
+                              //                               ${
+                              //                                 isSeatSelling.includes(LabelNumerSeat) ? 
+                              //                                 "bg-slate-500 text-neutral-400 "
+                              //                                 : isSeatSelected.includes(LabelNumerSeat) 
+                              //                                 ? "bg-orange-400 text-white" 
+                              //                                 : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
+                              //                               }`
+                              //                             }
+                              //                         >
+                              //                             {
+                              //                               seatNumber++
+                              //                             }
+                              //                         </button>
+                              //                 ) 
+                              //               })}
+                              //           </div>
+                              //           <div className="text-lg -mt-4">
+                              //               {seatLabel}
+                              //           </div>
+                              //       </li>
+                              //     )  
+                              //  }) 
+                                seats.map((col, rowIndex) => {
+                                  let seatNumber = 1;
+                                  const totalRow = seats.length;
+                                  const seatLabel = String.fromCharCode(65 + (totalRow - 1 - rowIndex));
                                   return (
-                                    <li key={rowIndex} className = "flex items-center justify-between p-3" >
-                                        <div className="text-lg -mt-4">
-                                             {seatLabel}
-                                        </div>
-                                        <div key={rowIndex}  className="flex  justify-center gap-x-2 "  >
-                                          {
-                                            col.map((seat,colIndex)=>{
-                                              const idSeat = `${rowIndex} - ${colIndex}`
-                                              const LabelNumerSeat = `${seatLabel}${seatNumber}`
-                                              if(seat===0) {
-                                                    seatNumber = seatNumber 
-                                                    return <div key={idSeat} className="w-10 h-10"></div>
+                                    <li key={rowIndex} className="flex items-center justify-between p-3">
+                                    {/* dãy chữ */}
+                                      <div className="text-lg -mt-4">{seatLabel}</div>
+                                      
+                                      <div className="flex justify-center gap-x-2">
+                                          {col.map((seat, colIndex) => {
+                                            const idSeat = `${rowIndex}-${colIndex}`;
+                                            const labelNumberSeat = `${seatLabel}${seatNumber}`;
+                                              if (seat === 0) {
+                                                return <div key={idSeat} className="w-10 h-10"></div>;
                                               }
-                                              return(
-                                                      <button 
-                                                          key={idSeat} 
-                                                          onClick={(e) => selectedSeat(seatLabel,e.target.textContent)}
-                                                          className={`w-5 h-5 rounded-md text-xs 
-                                                                      transition duration-300 ease-in-out 
-                                                                      focus:outline-none 
-                                                                      ${
-                                                                        isSeatSelling.includes(LabelNumerSeat) ? 
-                                                                        "bg-slate-500 text-neutral-400 "
-                                                                        : isSeatSelected.includes(LabelNumerSeat) 
-                                                                        ? "bg-orange-400 text-white" 
-                                                                        : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
-                                                                    }`}
-                                                      >
-                                                          {
-                                                            seatNumber++
-                                                          }
-                                                      </button>
-                                              ) 
-                                            })
-                                          }
-                                        </div>
-                                        <div className="text-lg -mt-4">
-                                            {seatLabel}
-                                        </div>
+                                              return (
+                                                <button
+                                                    key={idSeat}
+                                                    onClick={(e) => selectedSeat(seatLabel, e.target.textContent)}
+                                                    className={
+                                                      `w-5 h-5 rounded-md text-xs transition duration-300 ease-in-out 
+                                                      focus:outline-none 
+                                                      ${
+                                                        isSeatSelling.includes(labelNumberSeat)
+                                                        ? "bg-slate-500 text-neutral-400"
+                                                        : isSeatSelected.includes(labelNumberSeat)
+                                                        ? "bg-orange-400 text-white"
+                                                        : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
+                                                      }`
+                                                    }
+                                                >
+                                                    {seatNumber++}
+                                                </button>
+                                              );
+                                          })}
+                                      </div>
+                                      {/* dãy chữ */}
+                                      <div className="text-lg -mt-4">{seatLabel}</div>
                                     </li>
-                                  )  
-                               }) 
+                                  );
+                                })
                              }
                           </ul>
                         }

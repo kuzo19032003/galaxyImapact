@@ -83,8 +83,6 @@ function BookTicketFilm()
         setMovie(movie)
         setMoviePlayingOther(movieOther)
 
-       
-
     },[id])
 
     

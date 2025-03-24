@@ -50,19 +50,11 @@ const publicRouter = [
     { 
         path: "/booking/:movieName",
         element: <Booking/>,
-    }
-    ,
+    },
     { 
         path: "/profile",
         element: <Profile/>,
-    },
-    { 
-        path: "/profile/#profile",
-        element: <ProfileDetail/>,
-    },    { 
-        path: "/profile/#transaction",
-        element: <Transaction/>,
-    },
+    }
 ]
 
 const privateRouter = [
