@@ -1,10 +1,30 @@
 import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Bill({isSeatSelected,totalPrice,theaTer,time,day,movie })
+function Bill({isSeatSelected,totalPrice,HoldAndBook,theaTer,time,day,movie })
 {
-
+    
+    
     const navigate = useNavigate()
+    
+    console.log(totalPrice)
+
+    const HandlePayment = async () => {
+        
+        const seatsId = isSeatSelected.map(e => e.id)
+        const result = await HoldAndBook(14,3,seatsId)
+        
+        console.log(result.paymentUrl.paymentUrl);
+        
+
+        if(result.success ){
+            window.location.href = result.paymentUrl.paymentUrl
+        }else{
+            console.error("lỗi đặt vé");
+        }
+
+    }
+
     return (
         <div className="col-span-2 -translate-x-5 ">
             <div className="rounded-lg w-full min-h-114 shadow-2xl mt-15 ">
@@ -45,7 +65,7 @@ function Bill({isSeatSelected,totalPrice,theaTer,time,day,movie })
                             <span className="font-medium">
                                 {
                                 isSeatSelected.map((e) =>(
-                                    e + "  "
+                                    e.seatNumber + "  "
                                 ))
                                 }
                             </span>
@@ -59,7 +79,7 @@ function Bill({isSeatSelected,totalPrice,theaTer,time,day,movie })
                             </div>
                             <div className="font-medium">
                                 {
-                                totalPrice + "  "
+                                    totalPrice + "  "
                                 }
                                 VND
                             </div>
@@ -71,7 +91,10 @@ function Bill({isSeatSelected,totalPrice,theaTer,time,day,movie })
                             >
                                 Quay lại
                             </button>
-                            <button className="bg-orange-500 rounded-xl p-3 w-[40%] text-white">
+                            <button 
+                                className="bg-orange-500 rounded-xl p-3 w-[40%] text-white"
+                                onClick={() => HandlePayment()}
+                            >
                                 Tiếp tục
                             </button>
                         </div>

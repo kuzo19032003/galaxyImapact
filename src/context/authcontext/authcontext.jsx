@@ -70,6 +70,7 @@ export function AuthProvider ({children}){
         localStorage.removeItem("token")
         localStorage.removeItem("user")
         dispatch({type:'LOGOUT'})
+        window.location.href = "/"
     };
 
     return (

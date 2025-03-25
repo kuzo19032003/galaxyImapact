@@ -11,53 +11,65 @@ function Booking(){
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState(["G7"])
   const [totalPrice,setTotalPrice] = useState("")
+  const [isLoading,setIsLoading] = useState(false)
+  const {GetSeatOfHall,HoldAndBook} = useFilm()
+  const [seats,setSeats] = useState([])
 
-  const {GetSeatOfHall} = useFilm()
-
-  const theaTers = {
-      room1:{
-        rows:5,
-        col:5,
-        seats: [
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-            [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-        ]
-      },
-      room2:{
-        rows:10,
-        col:25,
-        seats: null
-      }
-  } 
+  // const theaTers = {
+  //     room1:{
+  //       rows:5,
+  //       col:5,
+  //       seats: [
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
+  //           [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
+  //       ]
+  //     },
+  //     room2:{
+  //       rows:10,
+  //       col:25,
+  //       seats: null
+  //     }
+  // } 
   
-    const room = theaTers["room2"];
+  //   const room = theaTers["room2"];
     // const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
     const nav = useNavigate()
 
-    const selectedSeat  = (seatLabel,seatNumber,) => {
-          const idSeat = `${seatLabel}${seatNumber}`
-          !isSeatSelling.includes(idSeat) &&
-          setIsSeatSelected( (prev) => (
-              prev.includes(idSeat) ? prev.filter( e => e !== idSeat ) : [...prev,idSeat]     
-          ))     
+    const selectedSeat  = (seatLabel,seatN,seat) => {
+          // const idSeat = `${seatLabel}${seatNumber}`
+          const idSeat = seat
+
+          console.log(isSeatSelected)
+
+          // !isSeatSelling.some(seat => seat.id === idSeat.id ) &&
+          
+          setIsSeatSelected( (prev) => {
+            const isExist = prev.some(seat => seat.id === idSeat.id)
+            
+            return isExist ? prev.filter( e => e.idSeat !== idSeat.seatNumber ) : [...prev,idSeat]     
+          
+          })     
     } 
 
-    const [seats,setSeats] = useState([])
 
     useEffect( () => {
-      const priceBook = 60000
+      const priceBook = 70000
+      const p = isSeatSelected.length * priceBook
+ 
       setTotalPrice(() => (isSeatSelected.length * priceBook))
       const token = localStorage.getItem("token")
       !token && nav("/")
     
       const log = async () => {
+          setIsLoading(true)
           const data = await GetSeatOfHall("23")
+          setIsLoading(false)
 
           let seatsTemporary = []
           let rowSeat = -1
@@ -78,8 +90,7 @@ function Booking(){
       log()
       
 
-      console.log(seats)
-    },[isSeatSelected])
+    },[])
 
     return (
       <div >
@@ -93,101 +104,109 @@ function Booking(){
               <div className="bg-gray-100 min-h-115 grid grid-cols-6">
                 <div className="col-span-4 m-15">
                     <div className="grid">
-                        {
-                          <ul className="shadow-lg w-auto bg-white rounded-md">
-                             {
-                              //  seats.map((col,rowIndex) => {
-                              //     let seatNumber = 1
-                              //     const totalRow = seats.length
-                              //     const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))
-                              //     return (
-                              //       <li key={rowIndex} className = "flex items-center justify-between p-3" >
-                              //           <div className="text-lg -mt-4">
-                              //                {seatLabel}
-                              //           </div>
-                              //           <div key={rowIndex}  className="flex  justify-center gap-x-2 "  >
-                              //             {
-                              //               col.map((seat,colIndex)=>{
-                              //                 const idSeat = `${rowIndex} - ${colIndex}`
-                              //                 const LabelNumerSeat = `${seatLabel}${seatNumber}`
-                              //                 if(seat===0) {
-                              //                       seatNumber = seatNumber 
-                              //                       return <div key={idSeat} className="w-10 h-10"></div>
-                              //                 }
-                              //                 return(
-                              //                         < button 
-                              //                             key={idSeat} 
-                              //                             onClick={(e) => selectedSeat(seatLabel,e.target.textContent)}
-                              //                             className =
-                              //                             {`w-5 h-5 rounded-md text-xs 
-                              //                               transition duration-300 ease-in-out 
-                              //                               focus:outline-none 
-                              //                               ${
-                              //                                 isSeatSelling.includes(LabelNumerSeat) ? 
-                              //                                 "bg-slate-500 text-neutral-400 "
-                              //                                 : isSeatSelected.includes(LabelNumerSeat) 
-                              //                                 ? "bg-orange-400 text-white" 
-                              //                                 : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
-                              //                               }`
-                              //                             }
-                              //                         >
-                              //                             {
-                              //                               seatNumber++
-                              //                             }
-                              //                         </button>
-                              //                 ) 
-                              //               })}
-                              //           </div>
-                              //           <div className="text-lg -mt-4">
-                              //               {seatLabel}
-                              //           </div>
-                              //       </li>
-                              //     )  
-                              //  }) 
-                                seats.map((col, rowIndex) => {
-                                  let seatNumber = 1;
-                                  const totalRow = seats.length;
-                                  const seatLabel = String.fromCharCode(65 + (totalRow - 1 - rowIndex));
-                                  return (
-                                    <li key={rowIndex} className="flex items-center justify-between p-3">
-                                    {/* dãy chữ */}
-                                      <div className="text-lg -mt-4">{seatLabel}</div>
-                                      
-                                      <div className="flex justify-center gap-x-2">
-                                          {col.map((seat, colIndex) => {
-                                            const idSeat = `${rowIndex}-${colIndex}`;
-                                            const labelNumberSeat = `${seatLabel}${seatNumber}`;
-                                              if (seat === 0) {
-                                                return <div key={idSeat} className="w-10 h-10"></div>;
-                                              }
-                                              return (
-                                                <button
-                                                    key={idSeat}
-                                                    onClick={(e) => selectedSeat(seatLabel, e.target.textContent)}
-                                                    className={
-                                                      `w-5 h-5 rounded-md text-xs transition duration-300 ease-in-out 
-                                                      focus:outline-none 
-                                                      ${
-                                                        isSeatSelling.includes(labelNumberSeat)
-                                                        ? "bg-slate-500 text-neutral-400"
-                                                        : isSeatSelected.includes(labelNumberSeat)
-                                                        ? "bg-orange-400 text-white"
-                                                        : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
-                                                      }`
-                                                    }
-                                                >
-                                                    {seatNumber++}
-                                                </button>
-                                              );
-                                          })}
-                                      </div>
+                        { isLoading 
+                          ? 
+                            <ul className="shadow-lg w-auto bg-white rounded-md min-h-50 flex items-center justify-center">
+                                <li>
+                                    <div className="animate-spin rounded-full h-5 w-5 border-b-3 border-gray"></div>
+                                </li>
+                            </ul>
+                          :
+                            <ul className="shadow-lg w-auto bg-white rounded-md">
+                              {
+                                //  seats.map((col,rowIndex) => {
+                                //     let seatNumber = 1
+                                //     const totalRow = seats.length
+                                //     const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))
+                                //     return (
+                                //       <li key={rowIndex} className = "flex items-center justify-between p-3" >
+                                //           <div className="text-lg -mt-4">
+                                //                {seatLabel}
+                                //           </div>
+                                //           <div key={rowIndex}  className="flex  justify-center gap-x-2 "  >
+                                //             {
+                                //               col.map((seat,colIndex)=>{
+                                //                 const idSeat = `${rowIndex} - ${colIndex}`
+                                //                 const LabelNumerSeat = `${seatLabel}${seatNumber}`
+                                //                 if(seat===0) {
+                                //                       seatNumber = seatNumber 
+                                //                       return <div key={idSeat} className="w-10 h-10"></div>
+                                //                 }
+                                //                 return(
+                                //                         < button 
+                                //                             key={idSeat} 
+                                //                             onClick={(e) => selectedSeat(seatLabel,e.target.textContent)}
+                                //                             className =
+                                //                             {`w-5 h-5 rounded-md text-xs 
+                                //                               transition duration-300 ease-in-out 
+                                //                               focus:outline-none 
+                                //                               ${
+                                //                                 isSeatSelling.includes(LabelNumerSeat) ? 
+                                //                                 "bg-slate-500 text-neutral-400 "
+                                //                                 : isSeatSelected.includes(LabelNumerSeat) 
+                                //                                 ? "bg-orange-400 text-white" 
+                                //                                 : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
+                                //                               }`
+                                //                             }
+                                //                         >
+                                //                             {
+                                //                               seatNumber++
+                                //                             }
+                                //                         </button>
+                                //                 ) 
+                                //               })}
+                                //           </div>
+                                //           <div className="text-lg -mt-4">
+                                //               {seatLabel}
+                                //           </div>
+                                //       </li>
+                                //     )  
+                                //  }) 
+                                  seats.slice().reverse().map((col, rowIndex) => {
+                                    let seatNumber = 1;
+                                    const totalRow = seats.length;
+                                    const seatLabel = String.fromCharCode(65 + (totalRow - 1 - rowIndex));
+                                    return (
+                                      <li key={rowIndex} className="flex items-center justify-between p-3">
                                       {/* dãy chữ */}
-                                      <div className="text-lg -mt-4">{seatLabel}</div>
-                                    </li>
-                                  );
-                                })
-                             }
-                          </ul>
+                                        <div className="text-lg -mt-4">{seatLabel}</div>
+                                        
+                                        <div className="flex justify-center gap-x-2">
+                                            {col.map((seat, colIndex) => {
+                                              const idSeat = `${rowIndex}-${colIndex}`;
+                                              const labelNumberSeat = `${seatLabel}${seatNumber}`;
+                                          
+                                                if (seat === 0) {
+                                                  return <div key={idSeat} className="w-10 h-10"></div>;
+                                                }
+                                                return (
+                                                  <button
+                                                      key={idSeat}
+                                                      onClick={(e) => selectedSeat(seatLabel, e.target.textContent,seat)}
+                                                      className={
+                                                        `w-5 h-5 rounded-md text-xs transition duration-300 ease-in-out 
+                                                        focus:outline-none 
+                                                        ${
+                                                          isSeatSelling.includes(labelNumberSeat)
+                                                          ? "bg-slate-500 text-neutral-400"
+                                                          : isSeatSelected.some(seat => seat.seatNumber === labelNumberSeat)
+                                                          ? "bg-orange-400 text-white"
+                                                          : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
+                                                        }`
+                                                      }
+                                                  >
+                                                      {seatNumber++}
+                                                  </button>
+                                                );
+                                            })}
+                                        </div>
+                                        {/* dãy chữ */}
+                                        <div className="text-lg -mt-4">{seatLabel}</div>
+                                      </li>
+                                    );
+                                  })
+                              }
+                            </ul>
                         }
                     </div>
                     {/* màn hình */}
@@ -220,6 +239,7 @@ function Booking(){
                       time={time} 
                       day={day} 
                       movie={movie}
+                      HoldAndBook={HoldAndBook}
                   />
               </div>
             </div>
