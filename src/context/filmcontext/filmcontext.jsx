@@ -1,5 +1,5 @@
 import { Children, createContext, useContext, useReducer } from "react"
-import {getSeatOfHall,holdAndBook} from "../../services/filmService/filmService"
+import {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats} from "../../services/filmService/filmService"
 import { data } from "react-router-dom"
 
 const FilmContext = createContext()
@@ -16,6 +16,8 @@ const FilmReducer = (state,action) => {
         case 'GetSeatOfHall':
             return {isGetSuccess:true, data: action.payload}
         case 'HoldAndBook':
+            return {isGetSuccess:true, data: action.payload}
+        case 'GetTransactionInfor':
             return {isGetSuccess:true, data: action.payload}
         default: 
             return state
@@ -40,8 +42,24 @@ const FilmProvider = ({children}) => {
         }
         return result
     }
+    const GetTransactionInfor = async (txtRef) => {
+        const result = await getTransactionInfor(txtRef)
+       
+        if(result.success){
+            dispatch({type:"GetTransactionInfor",payload: result.paymentUrl})
+        }
+        return result
+    }
+    const GetBookedseats = async (showTimeId) => {
+        const result = await getBookedseats(showTimeId)
+       
+        if(result.success){
+            dispatch({type:"GetBookedseats",payload: result.paymentUrl})
+        }
+        return result
+    }
     return (
-        <FilmContext.Provider value={{...state,GetSeatOfHall,HoldAndBook}}>
+        <FilmContext.Provider value={{...state,GetSeatOfHall,HoldAndBook,GetTransactionInfor,GetBookedseats}}>
             {children}
         </FilmContext.Provider> 
     )

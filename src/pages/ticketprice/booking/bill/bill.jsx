@@ -1,28 +1,36 @@
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Bill({isSeatSelected,totalPrice,HoldAndBook,theaTer,time,day,movie })
+function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie })
 {
-    
-    
+
+    const [totalPrice,setTotalPrice] = useState("")
+    const [isLoading,setIsLoading] = useState(false)
+
     const navigate = useNavigate()
     
-    console.log(totalPrice)
+    useEffect(()=>{
+        const priceBook = 70000
+        setTotalPrice(() => (isSeatSelected.length * priceBook))  
+    },[isSeatSelected])
 
     const HandlePayment = async () => {
-        
+        setIsLoading(true)
         const seatsId = isSeatSelected.map(e => e.id)
-        const result = await HoldAndBook(14,3,seatsId)
         
-        console.log(result.paymentUrl.paymentUrl);
-        
-
-        if(result.success ){
-            window.location.href = result.paymentUrl.paymentUrl
+        if(seatsId.length <= 0){
+            alert("Vui lòng chọn ghế !")
+            setIsLoading(false)
+            return;
         }else{
-            console.error("lỗi đặt vé");
+            const result = await HoldAndBook(14,3,seatsId)
+            setIsLoading(false)
+            if(result.success ){
+                window.location.href = result.paymentUrl.paymentUrl
+            }else{
+                console.error("lỗi đặt vé");
+            }
         }
-
     }
 
     return (
@@ -94,8 +102,15 @@ function Bill({isSeatSelected,totalPrice,HoldAndBook,theaTer,time,day,movie })
                             <button 
                                 className="bg-orange-500 rounded-xl p-3 w-[40%] text-white"
                                 onClick={() => HandlePayment()}
+                                disabled={isLoading}
                             >
-                                Tiếp tục
+                               { isLoading 
+                                    ? 
+                                      <div className="flex items-center justify-center">
+                                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                                      </div>  
+                                    : "Tiếp tục"
+                               }
                             </button>
                         </div>
                     </div>

@@ -11,6 +11,7 @@ import Profile from "../pages/profile/profile"
 
 import ProfileDetail from "../pages/profile/profileDetail/profileDetail"
 import Transaction from "../pages/profile/transaction/transaction"
+import HoldAndBook from "../pages/ticketprice/booking/holdAndBook/holdAndBook"
 import { OnlyHeaderLayout } from "../layouts"
 
 
@@ -54,6 +55,11 @@ const publicRouter = [
     { 
         path: "/profile",
         element: <Profile/>,
+    },
+    { 
+        path: "/HoldAndBook",
+        element: <HoldAndBook/>,
+        layout:  OnlyHeaderLayout
     }
 ]
 

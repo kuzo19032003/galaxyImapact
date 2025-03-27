@@ -9,10 +9,9 @@ function Booking(){
 
   const {theater,time,day,movie} = location.state   
   const [isSeatSelected,setIsSeatSelected] = useState([])
-  const [isSeatSelling,setIsSeatSelling] = useState(["G7"])
-  const [totalPrice,setTotalPrice] = useState("")
+  const [isSeatSelling,setIsSeatSelling] = useState([])
   const [isLoading,setIsLoading] = useState(false)
-  const {GetSeatOfHall,HoldAndBook} = useFilm()
+  const {GetSeatOfHall,HoldAndBook,GetBookedseats} = useFilm()
   const [seats,setSeats] = useState([])
 
   // const theaTers = {
@@ -41,17 +40,12 @@ function Booking(){
     // const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
     const nav = useNavigate()
 
-    const selectedSeat  = (seatLabel,seatN,seat) => {
-          // const idSeat = `${seatLabel}${seatNumber}`
+    const selectedSeat  = (seat) => {
           const idSeat = seat
-
-          console.log(isSeatSelected)
-
           // !isSeatSelling.some(seat => seat.id === idSeat.id ) &&
           
           setIsSeatSelected( (prev) => {
             const isExist = prev.some(seat => seat.id === idSeat.id)
-            
             return isExist ? prev.filter( e => e.idSeat !== idSeat.seatNumber ) : [...prev,idSeat]     
           
           })     
@@ -59,21 +53,23 @@ function Booking(){
 
 
     useEffect( () => {
-      const priceBook = 70000
-      const p = isSeatSelected.length * priceBook
- 
-      setTotalPrice(() => (isSeatSelected.length * priceBook))
       const token = localStorage.getItem("token")
       !token && nav("/")
-    
+
+   
+
       const log = async () => {
           setIsLoading(true)
           const data = await GetSeatOfHall("23")
+          const bookedSeat = await GetBookedseats("3")
           setIsLoading(false)
 
           let seatsTemporary = []
           let rowSeat = -1
           
+          setIsSeatSelling(bookedSeat.paymentUrl)
+          console.log(isSeatSelling)
+
           data.seats.forEach((seat,index) =>{
               const rowLetter = seat.seatNumber[0]
               const seatNumber = parseInt(seat.seatNumber.slice(1))
@@ -87,9 +83,7 @@ function Booking(){
             })       
             setSeats(seatsTemporary)
       }
-      log()
-      
-
+      log() 
     },[])
 
     return (
@@ -173,23 +167,24 @@ function Booking(){
                                         
                                         <div className="flex justify-center gap-x-2">
                                             {col.map((seat, colIndex) => {
+                                              
                                               const idSeat = `${rowIndex}-${colIndex}`;
                                               const labelNumberSeat = `${seatLabel}${seatNumber}`;
-                                          
+                                               
                                                 if (seat === 0) {
                                                   return <div key={idSeat} className="w-10 h-10"></div>;
                                                 }
                                                 return (
                                                   <button
                                                       key={idSeat}
-                                                      onClick={(e) => selectedSeat(seatLabel, e.target.textContent,seat)}
+                                                      onClick={(e) => selectedSeat(seat)}
                                                       className={
                                                         `w-5 h-5 rounded-md text-xs transition duration-300 ease-in-out 
                                                         focus:outline-none 
                                                         ${
-                                                          isSeatSelling.includes(labelNumberSeat)
-                                                          ? "bg-slate-500 text-neutral-400"
-                                                          : isSeatSelected.some(seat => seat.seatNumber === labelNumberSeat)
+                                                          isSeatSelling.includes(seat.id)
+                                                          ? "bg-slate-500 text-neutral-400":
+                                                           isSeatSelected.some(seat => seat.seatNumber === labelNumberSeat)
                                                           ? "bg-orange-400 text-white"
                                                           : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
                                                         }`
@@ -233,8 +228,7 @@ function Booking(){
                 </div>
                 {/* khung thanh toán */}
                   <Bill 
-                      isSeatSelected={isSeatSelected} 
-                      totalPrice ={totalPrice} 
+                      isSeatSelected={isSeatSelected}  
                       theaTer={theater} 
                       time={time} 
                       day={day} 

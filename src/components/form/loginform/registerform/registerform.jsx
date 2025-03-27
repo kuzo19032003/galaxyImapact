@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useAuth } from "../../../../context/authcontext/authcontext"
  
-function RegisterForm({login,setLogin})
+function RegisterForm({login,setLogin,isLoading})
 {
     const [fullName,setFullName] = useState("")
     const [username,setUsername] = useState("")
@@ -31,7 +31,7 @@ function RegisterForm({login,setLogin})
         if(result){
             setLogin(true)
         }
-        console.log("hi");
+
         
     }    
     return(
@@ -42,7 +42,11 @@ function RegisterForm({login,setLogin})
         <div className="flex flex-col items-center translate-y-30 gap-y-5">
             <h1 className="text-2xl text-white font-bold text-center">WELCOME TO GALAXY IMPACT</h1>
             <span className="texl-xs text-white">you can register account at here </span>
-            <button className="text-blue-500 p-2 rounded-md w-[80%] my-2" onClick={() => setLogin(false)}>
+            <button 
+                className="text-blue-500 p-2 rounded-md w-[80%] my-2" 
+                onClick={() => setLogin(false)}
+                disabled={isLoading}
+            >
                 Register
             </button>
         </div>
