@@ -1,8 +1,46 @@
+import { data, useParams } from "react-router-dom";
+import { useEffect,useState } from "react";
+import { useFilm } from "../../../context/filmcontext/filmcontext";
 import ContentFilm from "./contentfilm/contentfilm"
 import ShowTime from "./showtime/showtime"
-
 function MovieDetail({movie})
 {
+    
+    const {GetTheaterOfFilm,GetShowTimeOfTheater} = useFilm()
+    const {id} = useParams()     
+    const [theaters,setTheaters] = useState([])
+    const [isTime,setIsTime] = useState([])
+    
+    
+    useEffect(()=>{
+        
+        const getShowTimeOfTheater = async (id,theaterId) =>{
+            const result = await GetShowTimeOfTheater(id,theaterId)
+            return result.ShowTimes      
+        }
+
+        const getTheaters = async () => {
+            
+            const result = await GetTheaterOfFilm(id)
+            
+            if(result.success){
+                const showTimes = await Promise.all(
+                    result.Theaters.map(async (theater) => {
+                        const showTime = await getShowTimeOfTheater(id,theater.id)
+                        return {...theater,showTimes: showTime}
+                    })  
+                )
+                setTheaters(showTimes); 
+                setIsTime(showTimes.flatMap(st =>
+                    {   
+                        return st || [] 
+                    }));
+            }                    
+        }
+        getTheaters()
+    },[id])
+
+    
     return (
         <div className="col-span-5 w-full">
             <div >
@@ -72,7 +110,7 @@ function MovieDetail({movie})
                     </div>
                 </div>
                 <ContentFilm content ={movie.Content}/>
-                <ShowTime showTime ={movie.ShowTime} movie={movie}/>
+                <ShowTime showTime ={movie.ShowTime} movie={movie}  Theaters={theaters} ShowTimes={isTime}/>
             </div>
         </div>
     )

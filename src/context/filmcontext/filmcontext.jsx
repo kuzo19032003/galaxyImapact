@@ -1,5 +1,5 @@
 import { Children, createContext, useContext, useReducer } from "react"
-import {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats} from "../../services/filmService/filmService"
+import {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater} from "../../services/filmService/filmService"
 import { data } from "react-router-dom"
 
 const FilmContext = createContext()
@@ -19,6 +19,8 @@ const FilmReducer = (state,action) => {
             return {isGetSuccess:true, data: action.payload}
         case 'GetTransactionInfor':
             return {isGetSuccess:true, data: action.payload}
+        case 'GetTheaterOfFilm':
+            return {isGetSuccess:true, data: action.payload}
         default: 
             return state
     }
@@ -35,7 +37,7 @@ const FilmProvider = ({children}) => {
         return result
     }
     const HoldAndBook = async (userId,showTimeId,seatIds) => {
-        const result = await holdAndBook(14,3,seatIds)
+        const result = await holdAndBook(14,showTimeId,seatIds)
        
         if(result.success){
             dispatch({type:"HoldAndBook",payload: result.paymentUrl})
@@ -55,11 +57,25 @@ const FilmProvider = ({children}) => {
        
         if(result.success){
             dispatch({type:"GetBookedseats",payload: result.paymentUrl})
+            return result
         }
-        return result
+    }
+    const GetTheaterOfFilm = async (movieId) => {
+        const result = await getTheaterOfFilm(movieId)
+        if(result.success){
+            dispatch({type:"GetTheaterOfFilm",payload: result.Theaters})
+            return result
+        }
+    }
+    const GetShowTimeOfTheater = async (movieId,theaterId) => {
+        const result = await getShowTimeOfTheater(movieId,theaterId)
+        if(result.success){
+            dispatch({type:"GetShowTimeOfTheater",payload: result.ShowTimes})
+            return result
+        }
     }
     return (
-        <FilmContext.Provider value={{...state,GetSeatOfHall,HoldAndBook,GetTransactionInfor,GetBookedseats}}>
+        <FilmContext.Provider value={{...state,GetSeatOfHall,HoldAndBook,GetTransactionInfor,GetBookedseats,GetTheaterOfFilm,GetShowTimeOfTheater}}>
             {children}
         </FilmContext.Provider> 
     )

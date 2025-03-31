@@ -1,5 +1,6 @@
 import { axiosInstance } from "../../../axiosConfig"; 
 
+
 const getSeatOfHall = async (idHall) => {
     try{
 
@@ -39,8 +40,7 @@ const getTransactionInfor = async (txtRef) => {
     }
 }
 const getBookedseats = async (showTimeId) => {
-    try{
-        
+    try{  
         const response = await axiosInstance.get(`/api/seats/${showTimeId}/booked-seats`)
         if(response.data){
             return {success:true,paymentUrl : response.data}
@@ -49,5 +49,25 @@ const getBookedseats = async (showTimeId) => {
         return{success:false,Message:error}
     }
 }
-export {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats}
+const getTheaterOfFilm = async (movieId) => {
+    try{
+        const response = await axiosInstance.get(`/api/movies/${movieId}/theaters`)
+        if(response.data){
+            return {success:true,Theaters:response.data}
+        }
+    }catch(error){
+        return{success:false,Message:error}
+    }
+}
+const getShowTimeOfTheater = async (movieId,theaterId) => {
+    try{
+        const response = await axiosInstance.get(`/api/movies/${movieId}/cinemas/${theaterId}/showtimes`)
+        if(response.data){
+            return {success:true,ShowTimes:response.data}
+        }
+    }catch(error){
+        return{success:false,Message:error}
+    }
+}
+export {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater}
 

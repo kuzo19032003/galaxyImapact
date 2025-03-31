@@ -7,7 +7,7 @@ function Booking(){
 
   const location  = useLocation()
 
-  const {theater,time,day,movie} = location.state   
+  const {theater,time,day,movie,hall,showTimeId} = location.state   
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState([])
   const [isLoading,setIsLoading] = useState(false)
@@ -43,32 +43,32 @@ function Booking(){
     const selectedSeat  = (seat) => {
           const idSeat = seat
           // !isSeatSelling.some(seat => seat.id === idSeat.id ) &&
-          
           setIsSeatSelected( (prev) => {
+          
             const isExist = prev.some(seat => seat.id === idSeat.id)
-            return isExist ? prev.filter( e => e.idSeat !== idSeat.seatNumber ) : [...prev,idSeat]     
+            return isExist ? prev.filter( e => e.id !== idSeat.id ) : [...prev,idSeat]     
           
           })     
     } 
 
-
+    
     useEffect( () => {
       const token = localStorage.getItem("token")
       !token && nav("/")
 
-   
 
       const log = async () => {
           setIsLoading(true)
-          const data = await GetSeatOfHall("23")
-          const bookedSeat = await GetBookedseats("3")
+          const data = await GetSeatOfHall(hall)
+          const bookedSeat = await GetBookedseats(showTimeId)
           setIsLoading(false)
 
           let seatsTemporary = []
           let rowSeat = -1
           
           setIsSeatSelling(bookedSeat.paymentUrl)
-          console.log(isSeatSelling)
+         
+          
 
           data.seats.forEach((seat,index) =>{
               const rowLetter = seat.seatNumber[0]
@@ -160,37 +160,50 @@ function Booking(){
                                     let seatNumber = 1;
                                     const totalRow = seats.length;
                                     const seatLabel = String.fromCharCode(65 + (totalRow - 1 - rowIndex));
+                                  
+                                    const sortSeat  = col.sort((a,b) => {
+                                      const numA = parseInt(a.seatNumber.slice(1))
+                                      const numb = parseInt(b.seatNumber.slice(1))
+                                      return numA - numb
+                                    })
+              
                                     return (
                                       <li key={rowIndex} className="flex items-center justify-between p-3">
-                                      {/* dãy chữ */}
+                                        {/* dãy chữ */}
                                         <div className="text-lg -mt-4">{seatLabel}</div>
                                         
                                         <div className="flex justify-center gap-x-2">
-                                            {col.map((seat, colIndex) => {
+                                            {sortSeat.map((seat, colIndex) => {
                                               
+                                           
                                               const idSeat = `${rowIndex}-${colIndex}`;
-                                              const labelNumberSeat = `${seatLabel}${seatNumber}`;
-                                               
+                                            
+                                              const selected = isSeatSelected.some(s => s.id === seat.id)
+                                              const selling = isSeatSelling.some(s => s === seat.id)
+                                                                        
                                                 if (seat === 0) {
                                                   return <div key={idSeat} className="w-10 h-10"></div>;
                                                 }
                                                 return (
                                                   <button
                                                       key={idSeat}
-                                                      onClick={(e) => selectedSeat(seat)}
+                                                      onClick={() => selectedSeat(seat)}
+                                                      disabled={selling}
                                                       className={
                                                         `w-5 h-5 rounded-md text-xs transition duration-300 ease-in-out 
                                                         focus:outline-none 
                                                         ${
-                                                          isSeatSelling.includes(seat.id)
+                                                          selling
                                                           ? "bg-slate-500 text-neutral-400":
-                                                           isSeatSelected.some(seat => seat.seatNumber === labelNumberSeat)
+                                                          selected
                                                           ? "bg-orange-400 text-white"
                                                           : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
                                                         }`
                                                       }
                                                   >
-                                                      {seatNumber++}
+                                                      {
+                                                        seat.seatNumber.slice(1)
+                                                      }
                                                   </button>
                                                 );
                                             })}
@@ -234,6 +247,8 @@ function Booking(){
                       day={day} 
                       movie={movie}
                       HoldAndBook={HoldAndBook}
+                      Hall = {hall}
+                      ShowTimeId = {showTimeId}
                   />
               </div>
             </div>

@@ -1,13 +1,17 @@
 import { useEffect,useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie })
+function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId})
 {
-
     const [totalPrice,setTotalPrice] = useState("")
     const [isLoading,setIsLoading] = useState(false)
-
+    
     const navigate = useNavigate()
+    
+    const Day = new Date(time.split("T")[0]).toLocaleDateString("vi-VN")
+    const Time = new Date(time).toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})
+    const weekday = new Date(day).toLocaleDateString("vi-VN",{weekday:"long"})
+   
     
     useEffect(()=>{
         const priceBook = 70000
@@ -17,13 +21,13 @@ function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie })
     const HandlePayment = async () => {
         setIsLoading(true)
         const seatsId = isSeatSelected.map(e => e.id)
-        
+        console.log(seatsId)
         if(seatsId.length <= 0){
             alert("Vui lòng chọn ghế !")
             setIsLoading(false)
             return;
         }else{
-            const result = await HoldAndBook(14,3,seatsId)
+            const result = await HoldAndBook(14,ShowTimeId,seatsId)
             setIsLoading(false)
             if(result.success ){
                 window.location.href = result.paymentUrl.paymentUrl
@@ -51,17 +55,17 @@ function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie })
                                {theaTer}
                             </span>
                             <span>
-                                - Rạp 5
+                                - Rạp {Hall}
                             </span>
                         </div>
                         <div className="flex gap-x-5">
                             <div >
                                 <span >Suất : </span>
-                                <span className="font-medium text-base">{time}</span>
+                                <span className="font-medium text-base">{Day} - {Time} </span>
                             </div>
                             <div>
-                                <span >Thứ sáu, </span>
-                                <span className="font-medium text-base">{day}</span>
+                                <span >{weekday} , </span>
+                                <span className="font-medium text-base">{Day}</span>
                             </div>
                         </div>
                     </div>

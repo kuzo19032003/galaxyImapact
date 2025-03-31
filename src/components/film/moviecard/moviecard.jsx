@@ -1,7 +1,9 @@
 import { ticket,playbutton } from "../../../assets/images/images";
 import {Link} from "react-router-dom" 
+
 function MovieCard({id,img,nameFilm,trailer,src,vote,ages})
 {
+
     return (
         <div className="relative w-100% h-auto">
             <div className="relative rounded-md overflow-hidden w-[300px] h-[450px]">
