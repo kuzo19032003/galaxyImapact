@@ -12,6 +12,8 @@ function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId
     const Time = new Date(time).toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})
     const weekday = new Date(day).toLocaleDateString("vi-VN",{weekday:"long"})
    
+    const Poster = movie.images.find(img => img.name === "Poster")?.imageUrl || ""
+
     
     useEffect(()=>{
         const priceBook = 70000
@@ -44,10 +46,10 @@ function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId
                 <div className="p-7">
                     <div className="flex flex-col ">
                         <div className="flex gap-12  mt-2">
-                            <img src={movie.img2} alt="" width="170px" height="200px"/>
+                            <img src={Poster} alt="" className="object-cover w-[10vw] h-[30vh]"/>
                             <div className="flex flex-col">
-                                <span className="font-bold text-xl">{movie.nameFilm}</span>
-                                <span>2D Phụ đề - {movie.ages}</span>
+                                <span className="font-bold text-xl">{movie.title}</span>
+                                <span>2D Phụ đề - {movie.genre}</span>
                             </div>
                         </div>
                         <div className="mt-5">

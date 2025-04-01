@@ -26,7 +26,6 @@ import scroll from './scroll.png'
 
 
 
-
 const SliderImages = [
     {src: denamhon, alt: "Den am hon"},
     {src: nhagiatien, alt: "Den am hon"},

@@ -14,6 +14,7 @@ function Booking(){
   const {GetSeatOfHall,HoldAndBook,GetBookedseats} = useFilm()
   const [seats,setSeats] = useState([])
 
+  console.log(movie)
   // const theaTers = {
   //     room1:{
   //       rows:5,
@@ -42,9 +43,7 @@ function Booking(){
 
     const selectedSeat  = (seat) => {
           const idSeat = seat
-          // !isSeatSelling.some(seat => seat.id === idSeat.id ) &&
           setIsSeatSelected( (prev) => {
-          
             const isExist = prev.some(seat => seat.id === idSeat.id)
             return isExist ? prev.filter( e => e.id !== idSeat.id ) : [...prev,idSeat]     
           
@@ -55,7 +54,6 @@ function Booking(){
     useEffect( () => {
       const token = localStorage.getItem("token")
       !token && nav("/")
-
 
       const log = async () => {
           setIsLoading(true)

@@ -69,5 +69,25 @@ const getShowTimeOfTheater = async (movieId,theaterId) => {
         return{success:false,Message:error}
     }
 }
-export {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater}
+const getMovie = async () => {
+    try{
+        const response = await axiosInstance.get(`/api/movies`)
+        if(response.data){
+            return {success:true,Movies:response.data}
+        }
+    }catch(error){
+        return{success:false,Message:error}
+    }
+}
+const getMovieById = async (movieId) => {
+    try{
+        const response = await axiosInstance.get(`/api/movies/${movieId}`)
+        if(response.data){
+            return {success:true,Movie:response.data}
+        }
+    }catch(error){
+        return{success:false,Message:error}
+    }
+}
+export {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater,getMovie,getMovieById}
 

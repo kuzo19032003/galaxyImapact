@@ -25,7 +25,7 @@ function Film({className})
                     </button>
                     <button
                         onClick={() => setSelectedTab("future")} 
-                        className={selectedTab === "future" ? "border-b-2 text-xl text-indigo-700 font-bold transition-all duration-300  ease-in-out cursor-pointer" : " text-lg text-gray-500 font-bold transition-all duration-300 ease-in-out cursor-pointer opacity-50"}>
+                        className={selectedTab === "future" ? "border-b-2 text-xl text-indigo-700 font-bold transition-all duration-300  ease-in-out cursor-pointer" : " text-lg text-gray-800 font-bold transition-all duration-300 ease-in-out cursor-pointer opacity-50"}>
                             Sắp chiếu
                     </button>
 
@@ -33,7 +33,7 @@ function Film({className})
                 <div className="mt-[6vh]">
                     {
                         selectedTab == "showing" 
-                        ? <MovieShowing className= "grid grid-cols-4 gap-4"/> 
+                        ? <MovieShowing /> 
                         : <MovieFuture/>
                     }
                 </div>

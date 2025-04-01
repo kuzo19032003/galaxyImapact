@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react"
 import { Link } from "react-router-dom"
-function ShowTime({showTime,movie,Theaters,ShowTimes}){
+function ShowTime({movie,ShowTimes}){
 
     const [selectedDay,setSelectedDay] = useState("")
     const [filteredTheaters, setFilteredTheaters] = useState([]);
@@ -41,9 +41,7 @@ function ShowTime({showTime,movie,Theaters,ShowTimes}){
        
         setFilteredTheaters(filltheaters);
     }, [selectedDay]);
-    console.log(filteredTheaters)
-    
-
+  
     
     return(
         <div className="showTime mt-10">
@@ -126,7 +124,7 @@ function ShowTime({showTime,movie,Theaters,ShowTimes}){
                                                         "border border-gray-300 hover:bg-gray-300 hover:text-white p-3 rounded w-[5vw] h-auto text-center cursor-pointer"
                                                     >
                                                         <Link
-                                                            to={`/booking/${movie.nameFilm.replace(/\s+/g, "-").toLowerCase()}`}
+                                                            to={`/booking/${movie.title.replace(/\s+/g, "-").toLowerCase()}`}
                                                             state={{
                                                                 theater:theater.name, 
                                                                 time:show.startTime,
