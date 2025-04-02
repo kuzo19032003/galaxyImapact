@@ -39,7 +39,7 @@ const FilmProvider = ({children}) => {
         return result
     }
     const HoldAndBook = async (userId,showTimeId,seatIds) => {
-        const result = await holdAndBook(14,showTimeId,seatIds)
+        const result = await holdAndBook(userId,showTimeId,seatIds)
        
         if(result.success){
             dispatch({type:"HoldAndBook",payload: result.paymentUrl})

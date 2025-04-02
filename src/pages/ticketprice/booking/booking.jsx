@@ -50,10 +50,15 @@ function Booking(){
           })     
     } 
 
+    const token = localStorage.getItem("token")
+    const user = JSON.parse(localStorage.getItem("user"))
+    
+
     
     useEffect( () => {
-      const token = localStorage.getItem("token")
-      !token && nav("/")
+      
+
+      !token && !user && nav("/")
 
       const log = async () => {
           setIsLoading(true)
@@ -239,6 +244,7 @@ function Booking(){
                 </div>
                 {/* khung thanh toán */}
                   <Bill 
+                      id = {user.id}
                       isSeatSelected={isSeatSelected}  
                       theaTer={theater} 
                       time={time} 

@@ -23,7 +23,7 @@ import logoutIMG from './logout.png'
 import userFace from './user.png'
 import resume from './resume.png'
 import scroll from './scroll.png'
-
+import search from './search.png'
 
 
 const SliderImages = [
@@ -34,4 +34,4 @@ const SliderImages = [
 ]
 
 
-export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns,posterDetailNGT,resume,userFace,logoutIMG,scroll} ;
+export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns,posterDetailNGT,resume,userFace,logoutIMG,scroll,search} ;

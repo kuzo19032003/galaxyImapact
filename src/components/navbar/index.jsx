@@ -41,7 +41,11 @@ function Navbar() {
         <img src={logo} alt="Logo" className="w-30"/>
       </div>
       <div className="flex md:flex-row flex-col md:flex-col md:static absolute md:min-h-fit min-h-[15vh] top-[19%] left-0 md:w-auto w-full md:bg-white bg-gray-300">
-        <ListItem search={true} items={items} className="flex md:flex-row flex-col items-center gap-[3vh] md:gap-[2vw] p-2"/>
+        <ListItem 
+                search={true} 
+                items={items} 
+                className="flex md:flex-row flex-col items-center gap-[3vh] md:gap-[2vw] p-2"
+        />
       </div>
       <div className="flex gap-2">
         {

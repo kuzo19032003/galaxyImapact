@@ -1,8 +1,9 @@
 import { useEffect,useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId})
+function Bill({id,isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId})
 {
+
     const [totalPrice,setTotalPrice] = useState("")
     const [isLoading,setIsLoading] = useState(false)
     
@@ -15,6 +16,7 @@ function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId
     const Poster = movie.images.find(img => img.name === "Poster")?.imageUrl || ""
 
     
+    
     useEffect(()=>{
         const priceBook = 70000
         setTotalPrice(() => (isSeatSelected.length * priceBook))  
@@ -23,13 +25,13 @@ function Bill({isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTimeId
     const HandlePayment = async () => {
         setIsLoading(true)
         const seatsId = isSeatSelected.map(e => e.id)
-        console.log(seatsId)
+
         if(seatsId.length <= 0){
             alert("Vui lòng chọn ghế !")
             setIsLoading(false)
             return;
         }else{
-            const result = await HoldAndBook(14,ShowTimeId,seatsId)
+            const result = await HoldAndBook(id,ShowTimeId,seatsId)
             setIsLoading(false)
             if(result.success ){
                 window.location.href = result.paymentUrl.paymentUrl

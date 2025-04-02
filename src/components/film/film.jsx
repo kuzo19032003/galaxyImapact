@@ -14,7 +14,7 @@ function Film({className})
                 <div className="flex  items-center gap-10">
                     <div className="flex ">
                         <span className="border-l-3 border-blue-700 mr-2"></span>
-                        <h1 className=" font-bold text-2xl uppercase">
+                        <h1 className=" font-bold text-2xl uppercase text-gray-600">
                             PHIM
                         </h1>
                     </div>

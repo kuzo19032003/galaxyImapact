@@ -17,9 +17,7 @@ const getSeatOfHall = async (idHall) => {
 }
 const holdAndBook = async (userId,showtimeId,seatIds) => {
     try{
-        console.log(showtimeId);
-        
-        const response = await axiosInstance.post(`/api/bookings/hold-and-book/14`,{showtimeId,seatIds})
+        const response = await axiosInstance.post(`/api/bookings/hold-and-book/${userId}`,{showtimeId,seatIds})
         if(response.data){
             return {success:true,paymentUrl : response.data}
         }
