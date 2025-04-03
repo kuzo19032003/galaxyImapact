@@ -7,7 +7,8 @@ function Booking(){
 
   const location  = useLocation()
 
-  const {theater,time,day,movie,hall,showTimeId} = location.state   
+  const {theater,time,day,movie,hall,showTimeId} = location.state
+     
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState([])
   const [isLoading,setIsLoading] = useState(false)

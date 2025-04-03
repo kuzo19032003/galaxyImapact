@@ -8,13 +8,25 @@ function Bill({id,isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTim
     const [isLoading,setIsLoading] = useState(false)
     
     const navigate = useNavigate()
-    
+  
     const Day = new Date(time.split("T")[0]).toLocaleDateString("vi-VN")
-    const Time = new Date(time).toLocaleTimeString("vi-VN",{hour:"2-digit",minute:"2-digit"})
+    const formartDate = (time) => {
+        const date = new Date(time);
+        return isNaN(date.getTime())
+            ? time
+            : date.toLocaleDateString("vi-VN", { year: "numeric", month: "2-digit", day: "2-digit" });
+    }
+    const formatTime = (time) => {
+        const date = new Date(time);
+        return isNaN(date.getTime()) 
+            ? time
+            : date.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" });
+    };
     const weekday = new Date(day).toLocaleDateString("vi-VN",{weekday:"long"})
    
-    const Poster = movie.images.find(img => img.name === "Poster")?.imageUrl || ""
+    const Poster = movie.images.find(img => img.name === "Poster")?.imageUrl || ""  
 
+  
     
     
     useEffect(()=>{
@@ -65,11 +77,11 @@ function Bill({id,isSeatSelected,HoldAndBook,theaTer,time,day,movie,Hall,ShowTim
                         <div className="flex gap-x-5">
                             <div >
                                 <span >Suất : </span>
-                                <span className="font-medium text-base">{Day} - {Time} </span>
+                                <span className="font-medium text-base">{formartDate(day)} - {formatTime(time)} </span>
                             </div>
                             <div>
                                 <span >{weekday} , </span>
-                                <span className="font-medium text-base">{Day}</span>
+                                <span className="font-medium text-base">{formartDate(day) }</span>
                             </div>
                         </div>
                     </div>

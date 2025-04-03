@@ -41,8 +41,8 @@ function ShowTime({movie,ShowTimes}){
        
         setFilteredTheaters(filltheaters);
     }, [selectedDay]);
-  
-    
+
+
     return(
         <div className="showTime mt-10">
             <div className="flex">
@@ -135,6 +135,7 @@ function ShowTime({movie,ShowTimes}){
                                                             }}
                                                         >
                                                             {
+                                                                
                                                                 new Date(show.startTime).toLocaleTimeString([],{ hour: '2-digit', minute: '2-digit' })
                                                             }
                                                         </Link>

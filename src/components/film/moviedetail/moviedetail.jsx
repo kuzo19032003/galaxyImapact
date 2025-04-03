@@ -12,14 +12,6 @@ function MovieDetail({movie,time})
     const Poster = movie.images.find(img => img.name === "Poster")?.imageUrl || ""
     const Day = new Date(movie.releaseDate.split("T")[0]).toLocaleDateString("vi-VN")
   
-
-    useEffect(()=>{
-        
-
-    },[id])
-
-
-    
     
     return (
         <div className="col-span-5 w-full">
