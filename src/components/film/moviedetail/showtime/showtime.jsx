@@ -100,14 +100,12 @@ function ShowTime({movie,ShowTimes}){
                 <div >
                         { selectedDay &&
                             filteredTheaters.map((theater,index) => {
-
                                 const uniqueShowTimes = theater.showTimes.reduce((acc, show) => {
                                     if (!acc.some(s => s.startTime === show.startTime)) {
                                         acc.push(show);
                                     }
                                     return acc;
-                                }, []);
-                                
+                                }, []);                                
                                return (
                                     <div className=" h-auto p-5 border-b-2 border-gray-200 " key={index}>
                                         <div>

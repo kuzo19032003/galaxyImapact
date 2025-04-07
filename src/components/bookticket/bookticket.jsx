@@ -83,8 +83,6 @@ function Bookticket({className}){
                         const dateShow = new Date(show.startTime.split("T")[0]).toLocaleDateString("vi-VN",{ day: "2-digit",year: "numeric", month: "2-digit"})
                         return dateShow  === date
                     })
-                    const onlyShowTimes = [...new Set(showTimesOfDay.map(show => show.startTime.split("T")[1]))]
-               
                     setIsShowTime(showTimesOfDay)
                 }
            }
@@ -145,10 +143,13 @@ function Bookticket({className}){
         setIsSelectedShowTime(startTime)
         setIsOpenMenuShowTime(false) 
     }
+
+
+
+    
     const handleSubmit = () => { 
         const token = localStorage.getItem("token")
         if(!token){
-            alert("Vui lòng đăng nhập để đặt vé")
             return;   
         }
         
@@ -168,10 +169,7 @@ function Bookticket({className}){
         }
     }
 
-    
-
-    return (
-        
+    return (    
         <div className={className}>
             <div className= "flex flex-row gap-[1vw] items-center w-[155vh] min-h-[10vh] shadow-2xl">
                 <div className="flex justify-around  w-full ">
@@ -267,7 +265,7 @@ function Bookticket({className}){
                     </div>
                 </div>
                 <Button 
-                    className= "w-[20vh] h-[9vh] bg-orange-400 right-0" 
+                    className= "w-[20vh] h-[9vh] bg-orange-400 right-0 text-white font-bold rounded-lg hover:bg-orange-500" 
                     onclick={() => handleSubmit()}
                     disabled={!isSelectFilm && !isSelectedTheater && !isSelectedTimeDay && !isSelectedShowTime}
                 > 

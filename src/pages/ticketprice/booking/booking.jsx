@@ -8,7 +8,13 @@ function Booking(){
   const location  = useLocation()
 
   const {theater,time,day,movie,hall,showTimeId} = location.state
-     
+  console.log("Theater",theater)
+  console.log("Time",time)
+  console.log("Day",day)
+  console.log("Movie",movie)
+  console.log("Hall",hall)
+  console.log("ShowTimeId",showTimeId);
+  
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState([])
   const [isLoading,setIsLoading] = useState(false)
@@ -16,30 +22,7 @@ function Booking(){
   const [seats,setSeats] = useState([])
 
   console.log(movie)
-  // const theaTers = {
-  //     room1:{
-  //       rows:5,
-  //       col:5,
-  //       seats: [
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1],
-  //           [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0],
-  //       ]
-  //     },
-  //     room2:{
-  //       rows:10,
-  //       col:25,
-  //       seats: null
-  //     }
-  // } 
-  
-  //   const room = theaTers["room2"];
-    // const seats = room.seats || Array.from({ length : room.rows },() => Array(room.col).fill(1))
+
     const nav = useNavigate()
 
     const selectedSeat  = (seat) => {
@@ -112,7 +95,7 @@ function Booking(){
                           :
                             <ul className="shadow-lg w-auto bg-white rounded-md">
                               {
-                                //  seats.map((col,rowIndex) => {
+                          
                                 //     let seatNumber = 1
                                 //     const totalRow = seats.length
                                 //     const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))

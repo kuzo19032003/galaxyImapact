@@ -34,6 +34,7 @@ function MovieShowing() {
                                 return <MovieCard 
                                             key={index} 
                                             Film={movie}
+                                            isLink={true}
                                         />
                                 })    
                             }   
