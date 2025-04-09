@@ -19,15 +19,15 @@ function MovieCard({Film,classCard,classTitle,isLink})
             <div className={`relative rounded-md overflow-hidden ${finalClassCard}`}>
                 <div 
                     className="absolute w-full h-full box-border bg-black/0  hover:bg-black/30 
-                    cursor-pointer transition-all duration-300 group z-20"
+                    cursor-pointer transition-all duration-300 group z-1"
                 >
                     {
                         isLink && 
-                        <div className="flex flex-col justify-center items-center w-full h-full gap-7 z-10">
+                        <div className="flex flex-col justify-center items-center w-full h-full gap-7 z-2">
                             <Link 
                                 to= {`/dat-ve/${Film.id}`}
                                 className="opacity-0 group-hover:opacity-100 bg-orange-500 
-                                        w-[35%] h-[9%] 
+                                        w-[35%] h-[9%] h-[10%] whitespace-nowrap
                                         rounded text-white text-center py-2 px-2 hover:bg-orange-400 
                                         flex gap-2 justify-center" 
                                 >
@@ -44,7 +44,7 @@ function MovieCard({Film,classCard,classTitle,isLink})
                         </div>
                     }
                 </div>
-                <img  src={sharpImage} alt="poster" className="object-cover w-full h-full" />
+                <img  src={sharpImage} alt="poster" className="object-cover md:w-full md:h-full w-full h-full" />
                 {/* <div>
                     <p className="absolute top-[50vh] right-[0] w-[30%] bg-black/40 p-1">
                         <span className="mr-3">⭐</span>

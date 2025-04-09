@@ -25,6 +25,7 @@ import resume from './resume.png'
 import scroll from './scroll.png'
 import search from './search.png'
 
+import menu from './list.png'
 
 const SliderImages = [
     {src: denamhon, alt: "Den am hon"},
@@ -34,4 +35,4 @@ const SliderImages = [
 ]
 
 
-export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns,posterDetailNGT,resume,userFace,logoutIMG,scroll,search} ;
+export  {SliderImages,one,two,three,four,arrowUp,arrowDown,posterNGT,ticket,playbutton,posterNuHon,posterCaptain,posterDarkNuns,posterDetailNGT,resume,userFace,logoutIMG,scroll,search,menu} ;

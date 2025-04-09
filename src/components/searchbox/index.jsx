@@ -1,14 +1,17 @@
 import Input from "../input";
 import Button from "../button";
 import { useState,useRef,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {search} from "../../assets/images/images"
 function SearchBox() {
   const [handlerBtnSearch, sethandlerBtnSearch] = useState(false);
-  const [listFilm,setListFilm] = useState([])
+
   const [txtSearch,setTxtSearch] = useState("")
 
   const searchRef = useRef(null);
   
+  const nav = useNavigate()
+
   const showSearch = () => {
     sethandlerBtnSearch(!handlerBtnSearch);
   }
@@ -19,14 +22,12 @@ function SearchBox() {
     }
   }
 
-  const handleSearch = () => {
-    console.log(txtSearch);
-      
+  const handleSearch = (e) => {
+      if(e.key === "Enter" && txtSearch.trim() !== ""){
+          nav(`/search?title=${encodeURIComponent(txtSearch.trim())}`)
+      }
   }
   useEffect(() =>{
-
-
-
 
       document.addEventListener("mousedown",handlerClickOutside);
     return ()=>{
@@ -42,19 +43,14 @@ function SearchBox() {
                 " "
             }
         </Button>
-        <div  className={ handlerBtnSearch ? "inline px-2 py-1" : "hidden"}>
-          <Input           
+        <div  className={ handlerBtnSearch ? "inline px-2 py-1 " : "hidden"}>
+          <input           
               className="border-1 rounded-lg p-1 mx-5"   
               placeholder="Tìm kiếm..." 
-              Type="text"
+              type="text"
               onChange={(e) => setTxtSearch(e.target.value)}
+              onKeyDown={handleSearch}
           />
-          <Button 
-                className="rounded-xl bg-blue-400 p-2 text-white " 
-                onclick={() => handleSearch()}
-          >
-              Tìm kiếm
-          </Button>
         </div>
       </div>
   );

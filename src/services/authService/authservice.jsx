@@ -39,4 +39,12 @@ const getInforOfUser = async (username) =>{
         return {success: false,message: "Lấy thông tin thất bại"}
     }
 }
-export {loginAcc,register} 
+const getInforBookingOfUser = async (userId) =>{
+    try{
+        const response = await axiosInstance.get(`/api/bookings/user/${userId}`) 
+        return {success:true, inforBookings: response.data}
+    }catch(error){
+        return {success: false,message: "Lấy thông tin thất bại"}
+    }
+}
+export {loginAcc,register,getInforBookingOfUser} 

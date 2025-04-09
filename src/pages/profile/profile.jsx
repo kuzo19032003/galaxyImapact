@@ -1,22 +1,37 @@
-import { useEffect } from "react"
+import { useEffect,useState } from "react"
 import { Link,useLocation } from "react-router-dom"
 import ProfileDetail from "./profileDetail/profileDetail"
 import Transaction from "./transaction/transaction"
-
+import { useAuth } from "../../context/authcontext/authcontext"
 function Profile()
 {
     const user = JSON.parse(localStorage.getItem("user"))   
     const location = useLocation()
     const activeTab = location.hash.replace("#","") || "profile"
+
+
+    const {GetInforBookingOfUser} = useAuth()
     
+    const [inforBooking,setInforBooking] = useState([])
+    const [isLoading,setIsLoading] = useState([])
+
+
     useEffect(() => {
-       
-        console.log("hi");
-        
-    },[user])
+        const fetchInforBookingUser = async () => {
+            if(user){
+                setIsLoading(true)
+                const result = await GetInforBookingOfUser(user.id)
+                if(result.success){
+                   setInforBooking(result.inforBookings)
+                   setIsLoading(false)
+                }
+            }
+        }
+        fetchInforBookingUser()
+    },[])
 
     return(
-        <div className="mt-2  min-h-[100vh] bg-gray-200">
+        <div className="mt-2  min-h-[110vh] bg-gray-200">
             <div className="flex ">
                 <div className="bg-white shadow-xl w-[25vw] h-[70vh] m-[5vw]">
                     {user && 
@@ -60,8 +75,12 @@ function Profile()
                         </Link>
                     </div>
                     <div className="mt-5">
-                        { activeTab === "profile" ? <ProfileDetail user={user}/>  
-                          : activeTab === "transaction" && <Transaction/>  
+                        { activeTab === "profile" 
+                          ? 
+                            <ProfileDetail user={user}/>  
+                          : 
+                            activeTab === "transaction" && 
+                            <Transaction inforBooking={inforBooking} isLoading={isLoading} />  
                         }
                     </div>
                 </div>

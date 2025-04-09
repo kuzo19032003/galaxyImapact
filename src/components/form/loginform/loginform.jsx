@@ -38,10 +38,10 @@
             <div >
                 {isOpen && (
                         <div >
-                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center  z-10 ">   
+                            <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10 md:w-[100vw] gap">   
                               <div className="absolute inset-0 bg-black/50 z-1" onClick={isClose} ></div>     
                               { !forgotPassword && 
-                                <div className="bg-white p-2 rounded-2xl w-[60vw] min-h-[65vh] flex flex-rows justify-between z-11 "> 
+                                <div className="bg-white p-2 rounded-2xl md:w-[60vw] min-h-[65vh] flex flex-rows justify-between gap-x-9 z-11 "> 
                                     <div className = 
                                         { login 
                                           ? "translate-x-[10%] transition-all duration-500 ease-in-out " 
@@ -95,12 +95,12 @@
                                         {/* WELCOME */}
                                         { 
                                           !login &&
-                                          <div className="flex flex-col items-center translate-y-40 gap-y-5">
-                                                    <h1 className="text-2xl text-white font-bold text-center">WELCOME BACK GALAXY IMPACT</h1>
-                                                    <span className="texl-xs text-white">you can login account at here </span>
-                                                    <button className="text-blue-500 p-2 rounded-md w-[80%] my-2" onClick={() => setLogin(true)}>
-                                                        Login
-                                                    </button>
+                                          <div className="flex flex-col md:items-center translate-y-40 gap-y-5">
+                                                <h1 className="text-2xl  text-white font-bold text-center">WELCOME BACK GALAXY IMPACT</h1>
+                                                <span className="texl-xs text-white">you can login account at here </span>
+                                                <button className="text-blue-500 p-2 rounded-md md:w-[80%] my-2" onClick={() => setLogin(true)}>
+                                                    Login
+                                                </button>
                                           </div>
                                         }
                                     </div>

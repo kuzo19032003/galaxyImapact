@@ -26,17 +26,17 @@ function MovieShowing() {
                 <div className="animate-spin rounded-full h-15 w-15 border-b-5 border-white"></div>
             </div>
         :
-            <div className= "grid grid-cols-4 gap-4">
+            <div className= "grid grid-cols-4 md:gap-4">
                 {   
-                    <div className="grid grid-cols-3 gap-x-100  ">
+                    <div className="grid md:grid-cols-3 md:gap-x-100 grid-cols-1 gap-x-70">
                             {
                                 movies.map((movie,index) => {
-                                return <MovieCard 
-                                            key={index} 
-                                            Film={movie}
-                                            isLink={true}
-                                        />
-                                })    
+                                    return <MovieCard 
+                                                key={index} 
+                                                Film={movie}
+                                                isLink={true}
+                                            />
+                                    })    
                             }   
                     </div>
                 }

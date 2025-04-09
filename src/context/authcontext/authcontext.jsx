@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from 'react'
 
-import { loginAcc,register } from "../../services/authService/authservice";
+import { loginAcc,register,getInforBookingOfUser } from "../../services/authService/authservice";
 const AuthContext = createContext()
 export const useAuth = () => useContext(AuthContext)
 
@@ -72,9 +72,16 @@ export function AuthProvider ({children}){
         dispatch({type:'LOGOUT'})
         window.location.href = "/"
     };
+    const GetInforBookingOfUser = async (userId) => {
+        const result = await getInforBookingOfUser(userId)
+        if(result.success){
+            return result
+        }
+        return null
+    };
 
     return (
-        <AuthContext.Provider value={{...state, loginAccount, registerAccout, logout}}>
+        <AuthContext.Provider value={{...state, loginAccount, registerAccout, logout,GetInforBookingOfUser}}>
             {children}
         </AuthContext.Provider>
     )

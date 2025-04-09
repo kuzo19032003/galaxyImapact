@@ -9,7 +9,7 @@ function DefaultLayout({ children }) {
   return (
     <div>
       <Header />
-        <div className="content min-h-[100vh]">
+        <div className="content min-h-[100vh] ">
             {children}
         </div>
       <Footer />

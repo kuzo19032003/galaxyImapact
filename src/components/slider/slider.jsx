@@ -9,7 +9,6 @@ import "swiper/css/a11y";
 import {SliderImages} from '../../assets/images/images.jsx';
 function Slider({className})
 {    
-   
     return (
         <Swiper
             modules={[Navigation, Pagination, Autoplay,EffectCoverflow]}
@@ -29,12 +28,12 @@ function Slider({className})
             loop={true} 
             pagination={{clickable: true, dynamicBullets: true}}
             autoplay={{delay: 3000, disableOnInteraction: false}}
-            className=" w-full min-h-[50vh] "
+            className=" md:w-full md:min-h-[50vh] w-[100vw] "
         >
                 {
                     SliderImages.map((image, index) => (
                         <SwiperSlide key={index}>
-                            <img  src={image.src} alt={image.alt} className=" w-350 min-h-[54vh]" />
+                            <img  src={image.src} alt={image.alt} className=" md:w-350 md:min-h-[54vh] w-200 h-50" />
                         </SwiperSlide>
                     ))
                 }

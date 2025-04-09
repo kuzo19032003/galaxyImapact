@@ -1,6 +1,6 @@
 import FilmStart from "../pages/filmstart"
 import Home from "../pages/home"
-import Movie from "../pages/movie"
+import Movie from "../pages/movie/movie"
 import Theater from "../pages/theater"
 import TicketPrice from "../pages/ticketprice"
 import EventFilm from "../pages/event"
@@ -14,6 +14,7 @@ import Transaction from "../pages/profile/transaction/transaction"
 import HoldAndBook from "../pages/ticketprice/booking/holdAndBook/holdAndBook"
 import { OnlyHeaderLayout } from "../layouts"
 
+import ResultSearch from "../pages/resultsearch/resultsearch"
 
 // Router admin
 import Admin from "../pages/admin/admin"
@@ -26,8 +27,7 @@ const publicRouter = [
     },
     {
         path:"/movie",
-        element:<Movie />,
-        layout:  OnlyHeaderLayout
+        element:<Movie />
     },
     {
         path:"/booking",
@@ -60,6 +60,10 @@ const publicRouter = [
         path: "/HoldAndBook",
         element: <HoldAndBook/>,
         layout:  OnlyHeaderLayout
+    },
+    { 
+        path: "/search",
+        element: <ResultSearch/>
     }
 ]
 

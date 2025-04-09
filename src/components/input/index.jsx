@@ -1,4 +1,4 @@
-function Input({placeholder,Type,className,onChange})
+function Input({placeholder,Type,className,onChange,onKeyDown})
 {
     return (
         <input 

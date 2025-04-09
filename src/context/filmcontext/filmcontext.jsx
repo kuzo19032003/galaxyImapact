@@ -1,5 +1,5 @@
 import { Children, createContext, useContext, useReducer } from "react"
-import {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater,getMovie,getMovieById} from "../../services/filmService/filmService"
+import {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater,getMovie,getMovieById,getResultSearch} from "../../services/filmService/filmService"
 import { data } from "react-router-dom"
 
 const FilmContext = createContext()
@@ -90,8 +90,14 @@ const FilmProvider = ({children}) => {
             return result
         }
     }
+    const GetResultMovies = async (tilte) => {
+        const result = await getResultSearch(tilte)
+        if(result.success){
+            return result
+        }
+    }
     return (
-        <FilmContext.Provider value={{...state,GetSeatOfHall,HoldAndBook,GetTransactionInfor,GetBookedseats,GetTheaterOfFilm,GetShowTimeOfTheater,GetMovies,GetMovieById}}>
+        <FilmContext.Provider value={{...state,GetSeatOfHall,HoldAndBook,GetTransactionInfor,GetBookedseats,GetTheaterOfFilm,GetShowTimeOfTheater,GetMovies,GetMovieById,GetResultMovies}}>
             {children}
         </FilmContext.Provider> 
     )

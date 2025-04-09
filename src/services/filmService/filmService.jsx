@@ -87,5 +87,15 @@ const getMovieById = async (movieId) => {
         return{success:false,Message:error}
     }
 }
-export {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater,getMovie,getMovieById}
+const getResultSearch = async (title) => {
+    try{
+        const response = await axiosInstance.get(`/api/movies/search?title=${title}`)
+        if(response.data){
+            return {success:true,Movies:response.data}
+        }
+    }catch(error){
+        return{success:false,Message:error}
+    }
+}
+export {getSeatOfHall,holdAndBook,getTransactionInfor,getBookedseats,getTheaterOfFilm,getShowTimeOfTheater,getMovie,getMovieById,getResultSearch}
 

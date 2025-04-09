@@ -2,8 +2,12 @@ import { useState,useEffect } from "react";
 import { useFilm } from "../../context/filmcontext/filmcontext";
 import { useNavigate } from "react-router-dom";
 
-import MovieCard from "../../components/film/moviecard/moviecard";
-import Button from "../../components/button/index";
+
+import SelectedSeat from "./bookticketbylocation/selectedSeat/selectedSeat"
+import SelectedLocation from "./bookticketbylocation/selectedLocation/selectedLocation";
+import SelectedFilm from "./bookticketbylocation/selectedFilm/selectedFilm";
+import SelectedShowTimes from "./bookticketbylocation/selectedShowtimes/selectedShowtimes";
+
 function TicketPrice() {
   const {GetMovies,GetTheaterOfFilm,GetShowTimeOfTheater} = useFilm();
   const navigate = useNavigate()
@@ -27,12 +31,12 @@ function TicketPrice() {
   const visibleCount = 4
 
   const [selectedDay,setSelectedDay] = useState(null)
-  
+  const [isLoading,setIsLoading] = useState(false)
 
   useEffect(() => {
     const fetchMoview = async () => {
+      setIsLoading(true)
       const result = await GetMovies();
-
       if(result.success){ 
         const films = (result.Movies.map((item) => item.id));
         Promise.all(films.map(async (item) => {
@@ -44,8 +48,8 @@ function TicketPrice() {
         )).then((location) => {
           const arr = [...new Set(location.flat())];
           Setlocation(arr);
+          setIsLoading(false)
         });
-      
      }}
      fetchMoview()
     } 
@@ -53,6 +57,7 @@ function TicketPrice() {
 
   useEffect(() => {
     const fetchMoviewByLocation = async () => {
+      setIsLoading(true)
       const result = await GetMovies();
       if(result.success){
         Promise.all(result.Movies.map(async (film) => {
@@ -66,6 +71,7 @@ function TicketPrice() {
         }))
           .then((data) => {
             setMovies(data.filter((item) => item !== null));
+            setIsLoading(false)
           });
         
      }}
@@ -97,6 +103,7 @@ function TicketPrice() {
   useEffect(() => {
     const fetchShowTimeByDay = async () => {
       if(selectedDay && selectedMovies){
+        setIsLoading(true)
         const theaters = selectedMovies.theater;
         const allShowTime = await Promise.all(
           theaters.map(async (theater) => {       
@@ -122,6 +129,7 @@ function TicketPrice() {
           })
         )
         setShowTime(allShowTime)
+        setIsLoading(false)
       }
     };
     fetchShowTimeByDay();
@@ -129,10 +137,11 @@ function TicketPrice() {
 
 
 
-
 const handleSelectedFilm = async (item) => {
   SetSelectedMovies(item);
   setIsOpenFilm(false);
+  setIsOpenShowTimes(!isOpenShowTimes);
+
 }
 const handlePrev = () => {
   startIndex > 0 && 
@@ -143,7 +152,29 @@ const handleNext = () => {
   setStartIndex(startIndex+1)
 
 }
-
+const openLocation = () => {;
+  setIsOpenLocation(!isOpenLocation);
+  setIsOpenFilm(false);
+  setIsOpenShowTimes(false);
+}
+const openMovies = () => {
+  if(selectedlocation){
+    setIsOpenLocation(false);
+    setIsOpenFilm(!isOpenFilm);
+    setIsOpenShowTimes(false);
+  }else{
+    setIsOpenLocation(true);
+  }
+}
+const OpenShowTimes = () => {
+  if(selectedMovies){
+    setIsOpenLocation(false);
+    setIsOpenFilm(false);
+    setIsOpenShowTimes(!isOpenShowTimes);
+  }else{
+    setIsOpenFilm(true);
+  }
+}
 const handleSubmit = () => { 
   const token = localStorage.getItem("token")
   if(!token){
@@ -164,11 +195,7 @@ const handleSubmit = () => {
   }else{
       alert("Vui lòng chọn đầy đủ thông tin")
   }
-}
-
-
-
-  
+}  
     return (
       <div >
         <div className="w-full h-2 bg-gray-100"></div>
@@ -180,174 +207,42 @@ const handleSubmit = () => {
           </div>
           <div className="bg-gray-100 min-h-200 grid grid-cols-3">
              <div className="col-span-2 m-15  ">
-                <div  className={`w-[90%] shadow-xl rounded-xs p-5 transition-all duration-700 cursor-pointer overflow-hidden 
-                      ${isOpenLocation ? ' min-h-[15rem] ' : 'min-h-0 relative'}`}         
-                >
-                    <div onClick={() => setIsOpenLocation(!isOpenLocation)} >
-                        <h4 className="font-bold textx-xl">Chọn vị trí {selectedlocation &&  " - " + selectedlocation}</h4>
-                    </div>
-                    <div className={` 
-                          ${isOpenLocation ? 'translate-y-2 opacity-100' : 'translate-y--100rem opacity-20 absolute'}`}
-                    >
-                        <div className="grid grid-cols-4 gap-5 mt-7  ">
-                          {location &&
-                            location.map((item,index) => {
-                              return (
-                                <div key={index} 
-                                  className="border-2 border-gray-300 p-2 flex justify-center items-center justify-between cursor-pointer hover:bg-gray-200 rounded-md hover:text-gray-500"
-                                  onClick={() => {setIsOpenLocation(false), SetSelectedlocation(item), setIsOpenFilm(!isOpenFilm)}}
-                                >
-                                  {item}
-                                </div>
-                              )
-                            })
-                          }
-                        </div>
-                    </div>
-                </div>
-                <div  className={`w-[90%] shadow-xl rounded-xs p-5 transition-all duration-700 overflow-hidden cursor-pointer 
-                                 ${isOpenFilm ? ' min-h-[15rem]' : 'min-h-0 relative'}`}         >
-                    <div onClick={() => setIsOpenFilm(!isOpenFilm)} >
-                        <h4 className="font-bold textx-xl">Chọn Phim {selectedMovies &&  "-" + `${selectedMovies.title}` }</h4>
-                    </div>
-                    <div className={` 
-                          ${isOpenFilm ? ' translate-y-2 opacity-100 ' : 'translate-y--20rem opacity-10 absolute'}`}
-                    >
-                        <div className="grid grid-cols-3 gap-5 mt-7 ">
-                          {
-                            movies.map((item,index) => {
-                              return (                    
-                                <div key={index} onClick={() => handleSelectedFilm(item)}>
-                                    <MovieCard 
-                                      key={index} 
-                                      Film={item} 
-                                      classCard="w-[12rem] h-[37vh]"  
-                                      classTitle={"text-black"} 
-                                      isLink={false} 
-                                    />
-                                </div>
-                              )})
-                          } 
-                        </div>
-                    </div>
-                </div>
-                <div  className={`w-[90%] shadow-xl rounded-xs p-5 transition-all duration-700 overflow-hidden cursor-pointer 
-                                 ${isOpenShowTimes ? ' min-h-[15rem]' : 'min-h-0 relative'}`}         >
-                    <div onClick={() => setIsOpenShowTimes(!isOpenShowTimes)} >
-                        <h4 className="font-bold textx-xl">Chọn Suất Chiếu </h4>
-                    </div>
-                    <div className={` 
-                          ${isOpenShowTimes ? ' translate-y-2 opacity-100 ' : 'translate-y--20rem opacity-10 absolute'}`}
-                    >
-                    <div className="flex flex-rows gap-x-1 mt-7 p-5  relative overflow-hidden border-b-2" >
-                        <button 
-                            className="absolute top-12 left--20 z-10 "
-                            onClick={() => handlePrev()}
-                        >
-                          ◀ 
-                        </button>
-                        <button 
-                            className="absolute right-25 top-12 z-10"
-                            onClick={() => handleNext()}
-                        >
-                          ▶
-                        </button>
-                          {date &&
-                            date.slice(startIndex,startIndex + visibleCount).map((item,index) => {
-                              return (                    
-                                <div className =
-                                  {
-                                    `w-[6vw] h-[5rem] flex flex-col items-center justify-center 
-                                     rounded-xl cursor-pointer ml-8 transition-all 
-                                     duration-300 ease-in-out`
-                                  + (selectedDay === item ? " bg-blue-500 text-white" : " bg-gray-200 text-black")
-                                  }  
-                                  key={index}
-                                  style={{ transform: `translateX(-${startIndex * 3}vw)` }}
-                                  onClick={() => {setSelectedDay(item)}}
-                                >
-                                    <p className="overflow-auto whitespace-nowrap">
-                                        {
-                                          new Date(item).toLocaleDateString("vi-VN",{weekday:"long"})
-                                        }
-                                    </p>  
-                                    <p>
-                                      {new Date(item).toLocaleDateString("vi-VN",{day:"2-digit", month:"2-digit"})}
-                                    </p>
-                                </div>
-                              )}) 
-                          } 
-                        </div>
-                        <div>
-                            {showTime && 
-                              <div className="flex flex-col gap-5 mt-7 ">
-                                  {showTime.map((item,index) => (
-                                      <div key={index}>
-                                        <h2 className="font-bold text-lg">{item.theater.name}</h2>
-                                        <div className="flex flex-row gap-2 mt-2 ml-20">
-                                            {item.showtimes.map((showtime,index) => (
-                                              <button 
-                                                key={index} 
-                                                className={`px-4 py-2 rounded-lg border border-gray-300 text-gray-700 
-                                                  hover:bg-blue-100 hover:text-blue-600 transition-all duration-200 
-                                                  ${selectedShowTime?.showTime?.id === showtime.id ? "bg-blue-500 text-white font-semibold" : ""}
-                                                `}
-                                                onClick={() => setSelectedShowTime({ theater: item.theater, showTime: showtime })}
-                                              >
-                                                {showtime.time}
-                                              </button>
-                                            ))}
-                                        </div>
-                                      </div>      
-                                  ))}
-                              </div>
-                            }
-                        </div>
-                    </div>
-                </div>
+                <SelectedLocation 
+                      isOpenLocation ={isOpenLocation } 
+                      selectedlocation ={selectedlocation} 
+                      isLoading ={isLoading} location={location} 
+                      setIsOpenLocation ={setIsOpenLocation } 
+                      SetSelectedlocation ={SetSelectedlocation} 
+                      setIsOpenFilm ={setIsOpenFilm } 
+                      openLocation ={openLocation} 
+                      isOpenFilm ={isOpenFilm }
+                />
+                <SelectedFilm 
+                    isOpenFilm ={isOpenFilm } 
+                    selectedMovies ={selectedMovies } 
+                    isLoading ={isLoading } 
+                    movies ={movies }
+                    handleSelectedFilm ={handleSelectedFilm }
+                    openMovies ={openMovies}
+                />
+                <SelectedShowTimes 
+                    isOpenShowTimes ={isOpenShowTimes } 
+                    date = {date}
+                    startIndex ={startIndex }
+                    visibleCount ={visibleCount }
+                    isLoading ={isLoading }
+                    showTime ={showTime }
+                    selectedDay ={selectedDay }
+                    setSelectedDay ={setSelectedDay }
+                    selectedShowTime ={selectedShowTime }
+                    setSelectedShowTime ={setSelectedShowTime }
+                />
              </div>
-             <div className="col-span-1 mt-20 shawdow-2xl rounded-xs bg-white  h-[75vh] overflow-hidden mr-10">
-                <div className="bg-orange-500 w-full h-15 rounded-t-md flex items-center justify-center text-white text-lg">
-                        Thanh toán vé
-                </div>
-                    {selectedMovies &&
-                      <div className="flex flex-col gap-5 mt-5 ml-5">
-                        <div className="flex flex-row gap-5">
-                            <div>
-                                <img src={selectedMovies.images[0].imageUrl} alt=""  className="w-[10vw] h-[30vh]"/>
-                            </div>
-                            <div>
-                                <h2 className="font-bold">Phim { "-" + selectedMovies.title}</h2>
-                                {selectedShowTime &&
-                                    <div className="flex flex-col gap-2 mt-2">
-                                      <div>
-                                        <span>Suất { ":" + selectedShowTime?.showTime?.time } </span> -  
-                                        <span>
-                                            Ngày  {new Date(selectedShowTime?.showTime?.startTime).toLocaleDateString("vi-VN")}
-                                        </span>
-
-                                      </div>
-                                      <div>
-                                        <span>Rạp : {selectedShowTime?.theater?.name}</span>
-                                        <span> - {selectedShowTime?.theater?.location}</span>
-                                      </div>
-                                    </div>  
-                              }
-                            </div>
-                        </div> 
-                        <div>
-                        </div>   
-                        <div className="flex justify-end mr-5">
-                            <button className="bg-blue-500 text-white w-[30%] h-10 rounded-md mt-5 ml-5 hover:bg-blue-600"
-                                onClick={() => handleSubmit()} 
-                                
-                            >
-                                Chọn ghế
-                            </button>
-                        </div>
-                      </div>
-                    }
-             </div>
+             <SelectedSeat 
+                  selectedMovies = {selectedMovies } 
+                  selectedShowTime = {selectedShowTime} 
+                  handleSubmit ={handleSubmit } 
+              />
           </div>
         </div>
       </div>

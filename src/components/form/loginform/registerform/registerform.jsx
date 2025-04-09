@@ -34,12 +34,11 @@ function RegisterForm({login,setLogin,isLoading})
 
         
     }    
-    return(
-        
-        <div className={login ? "translate-x-[0%] transition-all duration-500 ease-in-out bg-blue-300 p-4 rounded-l-[30%] w-[40%] "  
+    return( 
+        <div className={login ? "absoulute translate-x-[0%] transition-all duration-500 ease-in-out bg-blue-300 p-4 rounded-l-[30%] md:w-[40%] w-[30%] "  
             : "-translate-x-[-10%] transition-all duration-500 ease-in-out p-4 "}>
         { login && 
-        <div className="flex flex-col items-center translate-y-30 gap-y-5">
+        <div className="flex flex-col md:items-center md:translate-y-30 translate-y-20 gap-y-3 md:gap-y-5">
             <h1 className="text-2xl text-white font-bold text-center">WELCOME TO GALAXY IMPACT</h1>
             <span className="texl-xs text-white">you can register account at here </span>
             <button 

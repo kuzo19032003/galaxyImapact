@@ -171,7 +171,7 @@ function Bookticket({className}){
 
     return (    
         <div className={className}>
-            <div className= "flex flex-row gap-[1vw] items-center w-[155vh] min-h-[10vh] shadow-2xl">
+            <div className= "md:flex md:flex-row md:gap-[1vw] md:items-center md:w-[155vh] md:min-h-[10vh] md:shadow-2xl hidden">
                 <div className="flex justify-around  w-full ">
                     <div onClick={handlerDropMenuFilm} className="flex items-center basis-[35vw] justify-between mx-3 cursor-pointer max-w-[20rem] min-w-[18rem] " >
                         <div className="flex gap-5">

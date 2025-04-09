@@ -8,12 +8,6 @@ function Booking(){
   const location  = useLocation()
 
   const {theater,time,day,movie,hall,showTimeId} = location.state
-  console.log("Theater",theater)
-  console.log("Time",time)
-  console.log("Day",day)
-  console.log("Movie",movie)
-  console.log("Hall",hall)
-  console.log("ShowTimeId",showTimeId);
   
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState([])
