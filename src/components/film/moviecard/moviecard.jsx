@@ -44,7 +44,7 @@ function MovieCard({Film,classCard,classTitle,isLink})
                         </div>
                     }
                 </div>
-                <img  src={sharpImage} alt="poster" className="object-cover md:w-full md:h-full w-full h-full" />
+                <img  src={sharpImage} alt="poster" className="object-cover md:w-full md:h-full w-full h-full"   style={{ imageRendering: "pixelated" }}  />
                 {/* <div>
                     <p className="absolute top-[50vh] right-[0] w-[30%] bg-black/40 p-1">
                         <span className="mr-3">⭐</span>

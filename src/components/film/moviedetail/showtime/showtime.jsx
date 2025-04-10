@@ -44,7 +44,7 @@ function ShowTime({movie,ShowTimes}){
 
 
     return(
-        <div className="showTime mt-10">
+        <div className=" mt-10">
             <div className="flex">
                 <span className="border-l-3 border-blue-700 mr-2"></span>
                 <h1 className= "font-medium text-xl">
@@ -67,7 +67,7 @@ function ShowTime({movie,ShowTimes}){
                 </button>
 
                 <div 
-                    className="flex flex-rows overflow-x-auto mx-17 gap-10 cursor-pointer transition-all duration-300 ease-in-out"
+                    className="flex flex-rows  overflow-x-auto md:mx-17 mx-5 gap-10 cursor-pointer transition-all duration-300 ease-in-out"
                     style={{ transform: `translateX(-${startIndex * 6}vw)` }}
                 >
                     {
@@ -76,8 +76,8 @@ function ShowTime({movie,ShowTimes}){
                                 className=
                                 {
                                     selectedDay == date
-                                    ? "w-[6vw] h-[10vh]  rounded-lg p-3 text-center bg-indigo-700 text-white" 
-                                    : "w-[6vw] h-[10vh]  rounded-lg p-3 text-center "
+                                    ? "md:w-[6vw] md:h-[10vh]  rounded-lg p-3 text-center bg-indigo-700 text-white" 
+                                    : "md:w-[6vw] md:h-[10vh]  rounded-lg p-3 text-center "
                                 } 
                                 onClick={() => setSelectedDay(date)}
                             >
@@ -113,13 +113,13 @@ function ShowTime({movie,ShowTimes}){
                                                 {theater.name} - {theater.location} 
                                             </h1>
                                         </div>
-                                        <div className="flex flex-rows gap-10  translate-x-55 mt-5">
+                                        <div className="flex flex-rows gap-10  md:translate-x-55 mt-5">
                                             {
                                                 uniqueShowTimes.slice(startIndex,startIndex + visibleCount).map((show,i) => (
                                                     <div 
                                                         key={i} 
                                                         className=
-                                                        "border border-gray-300 hover:bg-gray-300 hover:text-white p-3 rounded w-[5vw] h-auto text-center cursor-pointer"
+                                                        "border border-gray-300 hover:bg-gray-300 hover:text-white p-3 rounded md:w-[5vw] h-auto text-center cursor-pointer"
                                                     >
                                                         <Link
                                                             to={`/booking/${movie.title.replace(/\s+/g, "-").toLowerCase()}`}
@@ -129,6 +129,7 @@ function ShowTime({movie,ShowTimes}){
                                                                 day:selectedDay,
                                                                 hall:show.hallId,
                                                                 showTimeId:show.id,
+                                                                showTime:show,
                                                                 movie:movie
                                                             }}
                                                         >

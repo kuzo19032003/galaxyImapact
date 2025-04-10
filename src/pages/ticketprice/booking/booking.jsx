@@ -7,7 +7,8 @@ function Booking(){
 
   const location  = useLocation()
 
-  const {theater,time,day,movie,hall,showTimeId} = location.state
+  const {theater,time,day,movie,hall,showTimeId,showTime} = location.state
+  const basePrice = showTime && showTime.basePrice || 0
   
   const [isSeatSelected,setIsSeatSelected] = useState([])
   const [isSeatSelling,setIsSeatSelling] = useState([])
@@ -15,7 +16,7 @@ function Booking(){
   const {GetSeatOfHall,HoldAndBook,GetBookedseats} = useFilm()
   const [seats,setSeats] = useState([])
 
-  console.log(movie)
+
 
     const nav = useNavigate()
 
@@ -76,8 +77,8 @@ function Booking(){
                       Chọn ghế 
                   </p>
               </div>
-              <div className="bg-gray-100 min-h-115 grid grid-cols-6">
-                <div className="col-span-4 m-15">
+              <div className="bg-gray-100 min-h-115 grid md:grid-cols-6">
+                <div className="md:col-span-4 md:m-15">
                     <div className="grid">
                         { isLoading 
                           ? 
@@ -89,54 +90,6 @@ function Booking(){
                           :
                             <ul className="shadow-lg w-auto bg-white rounded-md">
                               {
-                          
-                                //     let seatNumber = 1
-                                //     const totalRow = seats.length
-                                //     const seatLabel = String.fromCharCode(65 + (totalRow -1 - rowIndex))
-                                //     return (
-                                //       <li key={rowIndex} className = "flex items-center justify-between p-3" >
-                                //           <div className="text-lg -mt-4">
-                                //                {seatLabel}
-                                //           </div>
-                                //           <div key={rowIndex}  className="flex  justify-center gap-x-2 "  >
-                                //             {
-                                //               col.map((seat,colIndex)=>{
-                                //                 const idSeat = `${rowIndex} - ${colIndex}`
-                                //                 const LabelNumerSeat = `${seatLabel}${seatNumber}`
-                                //                 if(seat===0) {
-                                //                       seatNumber = seatNumber 
-                                //                       return <div key={idSeat} className="w-10 h-10"></div>
-                                //                 }
-                                //                 return(
-                                //                         < button 
-                                //                             key={idSeat} 
-                                //                             onClick={(e) => selectedSeat(seatLabel,e.target.textContent)}
-                                //                             className =
-                                //                             {`w-5 h-5 rounded-md text-xs 
-                                //                               transition duration-300 ease-in-out 
-                                //                               focus:outline-none 
-                                //                               ${
-                                //                                 isSeatSelling.includes(LabelNumerSeat) ? 
-                                //                                 "bg-slate-500 text-neutral-400 "
-                                //                                 : isSeatSelected.includes(LabelNumerSeat) 
-                                //                                 ? "bg-orange-400 text-white" 
-                                //                                 : "hover:bg-blue-400 hover:text-white bg-gray-200 hover:scale-150"
-                                //                               }`
-                                //                             }
-                                //                         >
-                                //                             {
-                                //                               seatNumber++
-                                //                             }
-                                //                         </button>
-                                //                 ) 
-                                //               })}
-                                //           </div>
-                                //           <div className="text-lg -mt-4">
-                                //               {seatLabel}
-                                //           </div>
-                                //       </li>
-                                //     )  
-                                //  }) 
                                   seats.slice().reverse().map((col, rowIndex) => {
                                     let seatNumber = 1;
                                     const totalRow = seats.length;
@@ -231,6 +184,7 @@ function Booking(){
                       HoldAndBook={HoldAndBook}
                       Hall = {hall}
                       ShowTimeId = {showTimeId}
+                      basePrice= {basePrice}
                   />
               </div>
             </div>

@@ -31,9 +31,9 @@ function Profile()
     },[])
 
     return(
-        <div className="mt-2  min-h-[110vh] bg-gray-200">
+        <div className="mt-2  min-h-[110vh] bg-gray-200 overflow-hidden">
             <div className="flex ">
-                <div className="bg-white shadow-xl w-[25vw] h-[70vh] m-[5vw]">
+                <div className="bg-white shadow-xl md:w-[25vw] md:h-[70vh] m-[5vw]">
                     {user && 
                         <div className=" h-[30%]   ">
                             <span className="font-bold text-normal flex flex-col gap-10  justify-center items-center">

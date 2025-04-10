@@ -5,27 +5,23 @@ import ContentFilm from "./contentfilm/contentfilm"
 import ShowTime from "./showtime/showtime"
 function MovieDetail({movie,time})
 {
-    
-    const {GetTheaterOfFilm,GetShowTimeOfTheater} = useFilm()
-    const {id} = useParams()   
-    
+     
     const Poster = movie.images.find(img => img.name === "Poster")?.imageUrl || ""
     const Day = new Date(movie.releaseDate.split("T")[0]).toLocaleDateString("vi-VN")
   
-    
     return (
-        <div className="col-span-5 w-full">
+        <div className="md:col-span-5  w-full">
             <div >
                 <div className="flex flex-col ">
-                    <div className="grid grid-cols-3 gap-x-6 ">
-                        <div className="col-span-1 ">
+                    <div className="grid md:grid-cols-3 grid-cols-4 gap-x-3 md:gap-x-6 ">
+                        <div className="md:col-span-1 col-span-2 ">
                                 <img  
                                     src={Poster} 
                                     alt="Img" 
-                                    className="object-cover w-full h-[50vh] border-3 border-white -translate-y-27  " 
+                                    className="object-cover md:w-full md:h-[50vh] h-[50vh] border-3 border-white -translate-y-27  " 
                                 />
                         </div>
-                        <div className="col-span-2 gap-5">   
+                        <div className="md:col-span-2 col-span-2 md:gap-5">   
                             <div className="font-semibold text-3xl">
                                 <h1 >
                                     {movie.title}

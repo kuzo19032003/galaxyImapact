@@ -2,7 +2,7 @@ function Transaction({inforBooking,isLoading})
 {
      
     return(
-        <div className=" w-[55vw] h-[50vh] mt-3 text-center">
+        <div className=" md:w-[55vw]  md:h-[50vh] mt-3 text-center">
             { inforBooking.lenght = 0
                 ?
                     <span>
@@ -32,7 +32,7 @@ function Transaction({inforBooking,isLoading})
                                             minute: "2-digit"
                                             });
                                         return (
-                                            <div key={index} className="grid grid-cols-5 shadow-lg bg-gray-300 text-gray-500 rounded-xl p-5 gap-x-20">
+                                            <div key={index} className="grid md:grid-cols-5 grid-cols-2 shadow-lg bg-gray-300 text-gray-500 rounded-xl p-5 md:gap-x-20">
                                                 <div className="flex justify-center items-center font-medium gap-x-2 col-span-2">
                                                     <p>{day} </p>  
                                                     <p> - {time} </p> 
@@ -40,7 +40,7 @@ function Transaction({inforBooking,isLoading})
                                                 <div className="col-span-2 font-medium break-words whitespace-normal w-full">
                                                     Ghế : {infor.seatNumbers.map(seat => seat + ",")}
                                                 </div>
-                                                <div className="col-span-1 font-medium">
+                                                <div className="col-span-1 font-medium md:block hidden">
                                                     <p>
                                                         Tình Trạng 
                                                     </p>

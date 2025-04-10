@@ -60,7 +60,7 @@ function BookTicketFilm()
             isMovie && 
             <div>
                 <MovieImage img={isMovie.images} />
-                <div className="grid grid-cols-7 max-w-[75vw] mx-auto  mt-10">
+                <div className="md:grid md:grid-cols-7 max-w-[75vw] mx-auto  mt-10">
                     <MovieDetail movie={isMovie} time={isTime}/>
                     <MovieNowPlaying />
                 </div>

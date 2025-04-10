@@ -175,6 +175,8 @@ const OpenShowTimes = () => {
     setIsOpenFilm(true);
   }
 }
+
+
 const handleSubmit = () => { 
   const token = localStorage.getItem("token")
   if(!token){
@@ -189,7 +191,8 @@ const handleSubmit = () => {
               day:selectedShowTime?.showTime.startTime.split("T")[0],  
               hall:selectedShowTime?.showTime.hallId,
               showTimeId:selectedShowTime?.showTime.id,
-              movie:selectedMovies
+              movie:selectedMovies,
+              basePrice:selectedShowTime.showTime.basePrice
           }}
       )
   }else{
@@ -205,7 +208,7 @@ const handleSubmit = () => {
                   Chọn Vị trí / Phim / Suất chiếu 
               </p>
           </div>
-          <div className="bg-gray-100 min-h-200 grid grid-cols-3">
+          <div className="bg-gray-100 min-h-200 grid md:grid-cols-3 ">
              <div className="col-span-2 m-15  ">
                 <SelectedLocation 
                       isOpenLocation ={isOpenLocation } 
@@ -236,6 +239,9 @@ const handleSubmit = () => {
                     setSelectedDay ={setSelectedDay }
                     selectedShowTime ={selectedShowTime }
                     setSelectedShowTime ={setSelectedShowTime }
+                    handlePrev={handlePrev}
+                    handleNext={handleNext}
+                    OpenShowTimes ={OpenShowTimes }
                 />
              </div>
              <SelectedSeat 

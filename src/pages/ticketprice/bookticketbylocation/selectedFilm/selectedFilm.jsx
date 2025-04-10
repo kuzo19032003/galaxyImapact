@@ -15,7 +15,7 @@ function SelectedFilm({isOpenFilm,selectedMovies,isLoading,movies,handleSelected
                 <div className="animate-spin rounded-full h-10 w-10 border-b-3 border-gray-500"></div>
               </div> 
             :
-              <div className="grid grid-cols-3 gap-5 mt-7 ">
+              <div className="grid md:grid-cols-3 grid-cols-2 md:gap-5 mt-7 ">
                 {
                   movies.map((item,index) => {
                     return (                    

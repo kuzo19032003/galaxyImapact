@@ -1,6 +1,7 @@
 import Slider from "../../components/slider/slider";
 import Bookticket from "../../components/bookticket/bookticket";
 import Film from "../../components/film/film";
+import Introduction from "../../components/intro/introduction";
 import  "../../styles/background.css"
 function Home() {
   return (
@@ -10,6 +11,7 @@ function Home() {
       <Film 
           className= "mt-[5vh] min-h-[50vh] gradient-bg"
       /> 
+      <Introduction/>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 function MovieNowPlaying()
 {
     return(
-        <div className="col-span-2 ">
+        <div className="md:col-span-2 hidden ">
             <h1>Phim đang chiếu</h1>
         </div>
     )
